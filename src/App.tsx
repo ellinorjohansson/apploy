@@ -1,12 +1,14 @@
-import "./App.css";
-import { SearchJobsPage } from "./pages/SearchJobsPage";
+// App.tsx
 
-function App() {
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/Router";
+
+const App = () => {
   return (
     <>
-      <SearchJobsPage></SearchJobsPage>
+      <RouterProvider router={router} />
     </>
   )
-}
+};
 
-export default App;
+export default App; 

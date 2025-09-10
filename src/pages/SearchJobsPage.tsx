@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchJobs } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
-import { DigiButton } from '@digi/arbetsformedlingen-react';
-import { ButtonSize, ButtonVariation } from '@digi/arbetsformedlingen';
+import { AppButton } from "../components/buttons/AppButton";
 
 export const SearchJobsPage = () => {
 
@@ -53,13 +52,7 @@ export const SearchJobsPage = () => {
                     ))} 
                 </ul>
             </section>
-            <DigiButton
-                onClick={handleLoadMore}
-                afSize={ButtonSize.MEDIUM}
-                afVariation={ButtonVariation.PRIMARY}
-                afFullWidth={false}>
-                Visa fler
-            </DigiButton>
+            <AppButton onClick={handleLoadMore}>Se fler</AppButton>
     </>
     )
 }

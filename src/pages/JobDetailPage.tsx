@@ -1,3 +1,5 @@
+// JobDetailPage.tsx
+
 import { useParams } from "react-router-dom";
 
 export const JobsDetailPage = () => {

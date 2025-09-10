@@ -2,9 +2,19 @@
 @import "@digi/arbetsformedlingen/dist/digi-arbetsformedlingen/fonts/src/fonts.css";
 
 :root {
-  /*Colors*/
-  --digi--color--background--inverted-1: #91B4A9;
-  --digi--color--background--inverted-6: #EDE7E3;
-  --digi--color--background--inverted-6: #FFA62B;
-  --digi--color--background--inverted-6: #16697A;
+
+  /* Standard colors */
+  --color-background: #91B4A9; /* Main background */
+  --color-text: #EDE7E3; /* Textcolor */
+  --color-primary: #FFA62B; /* Titel / buttons / ikoner */
+  --color-header-footer-bg: #16697A; /* Header + footer background */
+
+  /* Overriding of AF colors */
+  --digi--color--background--inverted-1: var(--color-background);
+  --digi--color--background--inverted-2: var(--color-text);
+  --digi--color--background--inverted-3: var(--color-primary);
+  --digi--color--background--inverted-4: var(--color-header-footer-bg);
+
+  /* Overriding of AF fonts */
+  --digi--global--typography--font-family--default: "Poppins", sans-serif;
 }

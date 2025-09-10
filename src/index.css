@@ -2,6 +2,9 @@
 @import "@digi/arbetsformedlingen/dist/digi-arbetsformedlingen/fonts/src/fonts.css";
 
 :root {
-  --digi--color--background--inverted-1: yellow;
-  --digi--color--background--inverted-6: purple;
+  /*Colors*/
+  --digi--color--background--inverted-1: #91B4A9;
+  --digi--color--background--inverted-6: #EDE7E3;
+  --digi--color--background--inverted-6: #FFA62B;
+  --digi--color--background--inverted-6: #16697A;
 }

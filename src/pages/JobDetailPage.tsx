@@ -5,8 +5,8 @@ export const JobsDetailPage = () => {
 
   return (
     <section>
-      <h1>Jobbsidan</h1>
-      <p>Detaljsita för enskilt jobb{jobId}</p>
+      <h1>Enskilt jobb</h1>
+      <p>Detaljsidan{jobId}</p>
     </section>
   );
 };

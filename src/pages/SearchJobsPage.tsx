@@ -7,27 +7,39 @@ import { DigiButton } from '@digi/arbetsformedlingen-react';
 import { ButtonVariation } from '@digi/arbetsformedlingen';
 
 
+import { DigiButton } from '@digi/arbetsformedlingen-react';
+import { ButtonSize, ButtonVariation } from '@digi/arbetsformedlingen';
+
 export const SearchJobsPage = () => {
 
+    // Store jobs from the API
     const [jobs, setJobs] = useState<JobAd[]>([])
+
+    // Track how many jobs we have loaded
     const [offset, setOffset] = useState(0);
+
+    // Track if we are currently loading jobs
     const [loading, setLoading] = useState(false);
-    const limit = 10; // Amount of job ads per page
+
+    // Number of jobs to load per page
+    const limit = 10;
+   
     
-    // Function to load jobs
+   // Load jobs when the page loads or offset changes
+   useEffect(() => {
     const loadJobs = async () => {
-        setLoading(true);
-        const newJobs = await fetchJobs(limit, offset);
-        setJobs((prev) => [...prev, ...newJobs]);
-        setLoading(false);
+        setLoading(true); // Start loading
+        const newJobs = await fetchJobs(limit, offset); // Fetch jobs from API
+        setJobs((prev) => [...prev, ...newJobs]); // Add new jobs to the list
+        setLoading(false); // Stop loading
     };
 
-    // Get the first set of jobs when the component mounts or offset changes
-    useEffect(() => {
-        loadJobs();
+    // This effect calls loadJobs() to fetch new jobs from the API whenever the `offset` changes, allowing the list to update and load more jobs when the user clicks "Load more".
+    loadJobs();
     }, [offset]);
 
-    // "Show more"-button
+
+    // Run when user clicks "Visa fler"-button
     const handleLoadMore = () => {
         setOffset((prev) => prev + limit);
     };
@@ -45,10 +57,13 @@ export const SearchJobsPage = () => {
                     ))} 
                 </ul>
             </section>
-
-        <DigiButton onClick={handleLoadMore} afVariation={ButtonVariation.PRIMARY} style={{ marginTop: "1rem" }}>
-            Visa fler
-        </DigiButton>
+            <DigiButton
+                onClick={handleLoadMore}
+                afSize={ButtonSize.MEDIUM}
+                afVariation={ButtonVariation.PRIMARY}
+                afFullWidth={false}>
+                Visa fler
+            </DigiButton>
     </>
     )
 }

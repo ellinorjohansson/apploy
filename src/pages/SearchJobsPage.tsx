@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { fetchJobs } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
+import { DigiButton } from '@digi/arbetsformedlingen-react';
+import { ButtonVariation } from '@digi/arbetsformedlingen';
+
 
 export const SearchJobsPage = () => {
 
@@ -43,9 +46,9 @@ export const SearchJobsPage = () => {
                 </ul>
             </section>
 
-        <button onClick={handleLoadMore}>
-                Visa fler
-        </button>
+        <DigiButton onClick={handleLoadMore} afVariation={ButtonVariation.PRIMARY} style={{ marginTop: "1rem" }}>
+            Visa fler
+        </DigiButton>
     </>
     )
 }

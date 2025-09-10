@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { fetchJobs } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
+import { DigiButton } from '@digi/arbetsformedlingen-react';
+import { ButtonVariation } from '@digi/arbetsformedlingen';
+
 
 import { DigiButton } from '@digi/arbetsformedlingen-react';
 import { ButtonSize, ButtonVariation } from '@digi/arbetsformedlingen';
@@ -54,7 +57,6 @@ export const SearchJobsPage = () => {
                     ))} 
                 </ul>
             </section>
-
             <DigiButton
                 onClick={handleLoadMore}
                 afSize={ButtonSize.MEDIUM}

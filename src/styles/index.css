@@ -1,0 +1,13 @@
+/* Main CSS entry point - imports all styles */
+
+/* Designsystem first */
+@import './globals/designsystem.css';
+
+/* Global variables */
+@import './globals/variables.css';
+
+/* Global styles */
+@import './globals/globals.css';
+
+/* Page styles */
+@import './pages/SearchJobsPage.css';

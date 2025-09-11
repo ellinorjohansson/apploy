@@ -1,8 +1,8 @@
 // JobCard.tsx
 
 import type { JobAd } from "../types/jobs";
-import { DigiInfoCard } from "@digi/arbetsformedlingen-react";
-import { InfoCardHeadingLevel, InfoCardType, InfoCardVariation, InfoCardBorderPosition } from "@digi/arbetsformedlingen";
+import { DigiInfoCardMulti } from "@digi/arbetsformedlingen-react";
+import { InfoCardMultiHeadingLevel, InfoCardMultiType } from "@digi/arbetsformedlingen";
 
 
 
@@ -25,25 +25,22 @@ export const JobCard = ({ job }: JobCardProps) => {
     )?.label;
 
     return (
-        <DigiInfoCard 
+        <DigiInfoCardMulti 
             className="job-card"
             afHeading={job.headline}
-            afHeadingLevel={InfoCardHeadingLevel.H3}
-            afType={InfoCardType.RELATED}
+            afHeadingLevel={InfoCardMultiHeadingLevel.H3}
+            afType={InfoCardMultiType.RELATED}
             afLinkHref="#"
-            afLinkText="Läs mer"
-            afVariation={InfoCardVariation.PRIMARY}
-            afBorderPosition={InfoCardBorderPosition.TOP}
         >
             <div className="job-card-content">
                 <span className="job-location">{region}</span>
                 <span className="job-employer">{employer}</span>
                 <div className="job-tags">
                     <span className="job-tag">{working_hours_type}</span>
-                    {workMode && <span className="job-tag hybrid">{workMode}</span>}
+                    {workMode && <span className="job-tag hybrid">{workMode}</span>} {/*SYNS ALDRIG*/}
                 </div>
             </div>
-        </DigiInfoCard>
+        </DigiInfoCardMulti>
         
     );
 };

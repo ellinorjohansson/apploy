@@ -5,8 +5,8 @@ import { fetchJobs } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
-import { DigiLayoutColumns, DigiMediaImage, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
-import { LayoutColumnsElement, LayoutColumnsVariation, FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
+import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
+import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
 
 export const SearchJobsPage = () => {
 
@@ -211,16 +211,11 @@ export const SearchJobsPage = () => {
             
             {loading && <div className="loading-indicator">Loading jobs...</div>}
             
-            <DigiLayoutColumns
-                afElement={LayoutColumnsElement.DIV}
-                afVariation={LayoutColumnsVariation.THREE}
-            >
+            <DigiInfoCardMultiContainer key={filteredJobs.length}>
                 {filteredJobs.map((job) => (
-                    <DigiMediaImage key={job.id}>
-                        <JobCard job={job} />
-                    </DigiMediaImage>
+                    <JobCard key={job.id} job={job} />
                 ))}
-            </DigiLayoutColumns>
+            </DigiInfoCardMultiContainer>
             
             <div className="load-more-container">
                 <AppButton onClick={handleLoadMore}>Se fler</AppButton>

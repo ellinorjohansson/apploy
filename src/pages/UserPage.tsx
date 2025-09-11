@@ -1,7 +1,14 @@
 // UserPage.tsx
 
-import { DigiTypography } from '@digi/arbetsformedlingen-react';
-import { TypographyVariation } from '@digi/arbetsformedlingen';
+import {
+  DigiLayoutColumns,
+  DigiTypography,
+} from '@digi/arbetsformedlingen-react';
+import {
+  LayoutColumnsElement,
+  LayoutColumnsVariation,
+  TypographyVariation,
+} from '@digi/arbetsformedlingen';
 import { useJobs } from '../hooks/useJobs';
 import { JobActionTypes } from '../reducers/SaveJobReducer';
 import { AppButton } from '../components/buttons/AppButton';
@@ -46,17 +53,24 @@ export const UserPage = () => {
         ) : (
           savedJobs.map((job) => (
             <div key={job.id}>
-              <DigiTypography afVariation={TypographyVariation.SMALL}>
-                <h3>{job.headline}</h3>
-                <p>{job.workplace_address?.region}</p>
-              </DigiTypography>
+              <DigiLayoutColumns
+                afElement={LayoutColumnsElement.UL}
+                afVariation={LayoutColumnsVariation.THREE}
+              >
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                  <h3>{job.headline}</h3>
+                  <p>{job.employer?.name}</p>
+                </DigiTypography>
 
-              <AppButton onClick={() => handleRemoveJob(job.id)}>
-                Ta bort
-              </AppButton>
-              <AppButton onClick={() => handleToggleApplied(job.id)}>
-                Markera som sökt
-              </AppButton>
+                <div>
+                  <AppButton onClick={() => handleRemoveJob(job.id)}>
+                    Ta bort
+                  </AppButton>
+                  <AppButton onClick={() => handleToggleApplied(job.id)}>
+                    Markera som sökt
+                  </AppButton>
+                </div>
+              </DigiLayoutColumns>
             </div>
           ))
         )}
@@ -72,13 +86,18 @@ export const UserPage = () => {
         ) : (
           appliedJobs.map((job) => (
             <div key={job.id}>
-              <DigiTypography afVariation={TypographyVariation.SMALL}>
-                <h3>{job.headline}</h3>
-                <p>{job.workplace_address?.region}</p>
-              </DigiTypography>
-              <AppButton onClick={() => handleRemoveJob(job.id)}>
-                Ta bort
-              </AppButton>
+              <DigiLayoutColumns
+                afElement={LayoutColumnsElement.UL}
+                afVariation={LayoutColumnsVariation.THREE}
+              >
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                  <h3>{job.headline}</h3>
+                  <p>{job.employer?.name}</p>
+                </DigiTypography>
+                <AppButton onClick={() => handleRemoveJob(job.id)}>
+                  Ta bort
+                </AppButton>
+              </DigiLayoutColumns>
             </div>
           ))
         )}

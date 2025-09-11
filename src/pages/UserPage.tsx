@@ -3,6 +3,7 @@
 import {
   DigiFormCheckbox,
   DigiLayoutColumns,
+  DigiLayoutBlock,
   DigiTypography,
 } from '@digi/arbetsformedlingen-react';
 import {
@@ -44,7 +45,7 @@ export const UserPage = () => {
 
   return (
     <>
-      <section>
+      <DigiLayoutBlock>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h2>Sparade jobb</h2>
         </DigiTypography>
@@ -54,11 +55,20 @@ export const UserPage = () => {
           </DigiTypography>
         ) : (
           savedJobs.map((job) => (
-            <div key={job.id}>
+            <div key={`saved-${job.id}`}>
               <DigiLayoutColumns
                 afElement={LayoutColumnsElement.DIV}
                 afVariation={LayoutColumnsVariation.THREE}
               >
+                <div>
+                  <DigiFormCheckbox
+                    afLabel="Markera som sökt"
+                    afVariation={FormCheckboxVariation.SECONDARY}
+                    checked={job.applied}
+                    onChange={() => handleToggleApplied(job.id)}
+                  />
+                </div>
+
                 <div>
                   <DigiTypography afVariation={TypographyVariation.SMALL}>
                     <h3>{job.headline}</h3>
@@ -70,22 +80,14 @@ export const UserPage = () => {
                   <AppButton onClick={() => handleRemoveJob(job.id)}>
                     Ta bort
                   </AppButton>
-                  <DigiFormCheckbox
-                    afLabel="Markera som sökt"
-                    afVariation={FormCheckboxVariation.SECONDARY}
-                    checked={job.applied}
-                    onChange={() => handleToggleApplied(job.id)}
-                  />
-                </div>
-                <div>
-                  <h2>test</h2>
                 </div>
               </DigiLayoutColumns>
             </div>
           ))
         )}
-      </section>
-      <section>
+      </DigiLayoutBlock>
+
+      <DigiLayoutBlock>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h2>Sökta jobb</h2>
         </DigiTypography>
@@ -95,26 +97,35 @@ export const UserPage = () => {
           </DigiTypography>
         ) : (
           appliedJobs.map((job) => (
-            <div key={job.id}>
+            <div key={`applied-${job.id}`}>
               <DigiLayoutColumns
-                afElement={LayoutColumnsElement.UL}
+                afElement={LayoutColumnsElement.DIV}
                 afVariation={LayoutColumnsVariation.THREE}
               >
-                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                <div>
+                  <DigiFormCheckbox
+                    afLabel="Avmarkera som sökt"
+                    afVariation={FormCheckboxVariation.SECONDARY}
+                    checked={job.applied}
+                    onChange={() => handleToggleApplied(job.id)}
+                  />
+                </div>
+
+                <div>
+                  <DigiTypography afVariation={TypographyVariation.SMALL}>
                   <h3>{job.headline}</h3>
                   <p>{job.employer?.name}</p>
                 </DigiTypography>
-                <DigiFormCheckbox
-                  afLabel="Avmarkera som sökt"
-                  afVariation={FormCheckboxVariation.SECONDARY}
-                  checked={job.applied}
-                  onChange={() => handleToggleApplied(job.id)}
-                />
+                </div>
+
+                <div>
+                  <h2>Test</h2>
+                </div>
               </DigiLayoutColumns>
             </div>
           ))
         )}
-      </section>
+      </DigiLayoutBlock>
     </>
   );
 };

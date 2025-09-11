@@ -1,5 +1,5 @@
 import type { JobAd } from "../types/jobs";
-import { saveCartToLocalStorage } from "../helpers/ls";
+import { saveJobToLocalStorage } from "../helpers/ls";
 
 export enum JobActionTypes {
   ADDED,
@@ -24,25 +24,25 @@ export const JobReducer = (jobs: JobAd[], action: JobAction): JobAd[] => {
 
       // Add the new job by applied: false, as default
       returnValue = [...jobs, { ...action.payload, applied: false }];
-      saveCartToLocalStorage(JSON.stringify(returnValue));
+      saveJobToLocalStorage(JSON.stringify(returnValue));
       return returnValue;
     }
 
     case JobActionTypes.REMOVED: {
       // Remove job by matching id
       returnValue = jobs.filter((job) => job.id !== action.payload);
-      saveCartToLocalStorage(JSON.stringify(returnValue));
+      saveJobToLocalStorage(JSON.stringify(returnValue));
       return returnValue;
     }
 
     case JobActionTypes.TOGGLED: {
-      // Toggle between save and applied
-      returnValue = jobs.map((job) =>
-        job.id === action.payload ? { ...job, applied: true } : job
+      const returnValue = jobs.map((job) =>
+        job.id === action.payload ? { ...job, applied: !job.applied } : job
       );
-      saveCartToLocalStorage(JSON.stringify(returnValue));
+      saveJobToLocalStorage(JSON.stringify(returnValue));
       return returnValue;
     }
+
 
     default:
       return jobs;

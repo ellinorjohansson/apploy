@@ -1,3 +1,3 @@
-export const saveCartToLocalStorage = (value: string) => {
+export const saveJobToLocalStorage = (value: string) => {
   localStorage.setItem("job", value);
 };

@@ -1,10 +1,12 @@
 // UserPage.tsx
 
 import {
+  DigiFormCheckbox,
   DigiLayoutColumns,
   DigiTypography,
 } from '@digi/arbetsformedlingen-react';
 import {
+  FormCheckboxVariation,
   LayoutColumnsElement,
   LayoutColumnsVariation,
   TypographyVariation,
@@ -54,21 +56,29 @@ export const UserPage = () => {
           savedJobs.map((job) => (
             <div key={job.id}>
               <DigiLayoutColumns
-                afElement={LayoutColumnsElement.UL}
+                afElement={LayoutColumnsElement.DIV}
                 afVariation={LayoutColumnsVariation.THREE}
               >
-                <DigiTypography afVariation={TypographyVariation.SMALL}>
-                  <h3>{job.headline}</h3>
-                  <p>{job.employer?.name}</p>
-                </DigiTypography>
+                <div>
+                  <DigiTypography afVariation={TypographyVariation.SMALL}>
+                    <h3>{job.headline}</h3>
+                    <p>{job.employer?.name}</p>
+                  </DigiTypography>
+                </div>
 
                 <div>
                   <AppButton onClick={() => handleRemoveJob(job.id)}>
                     Ta bort
                   </AppButton>
-                  <AppButton onClick={() => handleToggleApplied(job.id)}>
-                    Markera som sökt
-                  </AppButton>
+                  <DigiFormCheckbox
+                    afLabel="Markera som sökt"
+                    afVariation={FormCheckboxVariation.SECONDARY}
+                    checked={job.applied}
+                    onChange={() => handleToggleApplied(job.id)}
+                  />
+                </div>
+                <div>
+                  <h2>test</h2>
                 </div>
               </DigiLayoutColumns>
             </div>
@@ -94,9 +104,12 @@ export const UserPage = () => {
                   <h3>{job.headline}</h3>
                   <p>{job.employer?.name}</p>
                 </DigiTypography>
-                <AppButton onClick={() => handleRemoveJob(job.id)}>
-                  Ta bort
-                </AppButton>
+                <DigiFormCheckbox
+                  afLabel="Avmarkera som sökt"
+                  afVariation={FormCheckboxVariation.SECONDARY}
+                  checked={job.applied}
+                  onChange={() => handleToggleApplied(job.id)}
+                />
               </DigiLayoutColumns>
             </div>
           ))

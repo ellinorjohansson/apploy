@@ -1,5 +1,9 @@
 /* saveJob.css */
 
+.sc-digi-form-checkbox-h {
+    --digi--form-checkbox--background-color--secondary: #FFC108;
+}
+
 .save-job-wrapper {
     display: flex;
     flex-direction: column;

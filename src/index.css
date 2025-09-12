@@ -20,7 +20,6 @@
   --digi--color--background--inverted-4: var(--color-header-footer-bg);
   --digi--color--background--inverted-6: var(--color-header-footer-bg); /*Hover*/
 
-
   /* Overriding of AF fonts */
   --digi--global--typography--font-family--default: "Poppins", sans-serif;
 }

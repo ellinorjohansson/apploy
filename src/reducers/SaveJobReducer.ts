@@ -36,12 +36,15 @@ export const JobReducer = (jobs: JobAd[], action: JobAction): JobAd[] => {
     }
 
     case JobActionTypes.TOGGLED: {
-      const returnValue = jobs.map((job) =>
-        job.id === action.payload ? { ...job, applied: !job.applied } : job
+      returnValue = jobs.map((job) =>
+        job.id === action.payload
+          ? { ...job, applied: !job.applied }
+          : job
       );
       saveJobToLocalStorage(JSON.stringify(returnValue));
       return returnValue;
     }
+
 
 
     default:

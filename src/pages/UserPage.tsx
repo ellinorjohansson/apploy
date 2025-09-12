@@ -1,38 +1,26 @@
-// UserPage.tsx
-
+import { useJobs } from '../hooks/useJobs';
+import { JobActionTypes } from '../reducers/SaveJobReducer';
+import { AppButton } from '../components/buttons/AppButton';
+import '../styles/saveJob.css';
 import {
   DigiFormCheckbox,
-  DigiLayoutColumns,
   DigiLayoutBlock,
+  DigiLayoutColumns,
   DigiTypography,
 } from '@digi/arbetsformedlingen-react';
 import {
   FormCheckboxVariation,
+  LayoutBlockVariation,
   LayoutColumnsElement,
-  LayoutColumnsVariation,
   TypographyVariation,
 } from '@digi/arbetsformedlingen';
-import { useJobs } from '../hooks/useJobs';
-import { JobActionTypes } from '../reducers/SaveJobReducer';
-import { AppButton } from '../components/buttons/AppButton';
-
-// TA BORT
-
-// När man klickar på spara knappen i detailpage så ska det id läggas till i denna filen
-// Klickar man i checkboxen ska jobbet flyttas ned till "sökta jobb" och utgråas
-// Detta ska sparas i localhost
-// Lägg till datum som man klickar i checkboxen för att spara när det var man sökte arbetet
-// Fallback om någon av listorna är tomma
-// Ta bort sparade arbeten
-
-// Sparade jobb
-// Sökta jobb
 
 export const UserPage = () => {
+  // Retrieve jobs and dispatch function from custom hook
   const { jobs, dispatch } = useJobs();
 
+  // Separate jobs into saved and applied lists
   const savedJobs = jobs.filter((job) => !job.applied);
-
   const appliedJobs = jobs.filter((job) => job.applied);
 
   const handleRemoveJob = (id: string) => {
@@ -43,89 +31,72 @@ export const UserPage = () => {
     dispatch({ type: JobActionTypes.TOGGLED, payload: id });
   };
 
-  return (
-    <>
-      <DigiLayoutBlock>
+  // Function to render a single job row with checkbox, text, and button
+  const renderJob = (job: (typeof jobs)[0], listType: 'saved' | 'applied') => (
+    <DigiLayoutColumns
+      afElement={LayoutColumnsElement.DIV}
+      key={`${listType}-${job.id}`}
+      className={`job-row ${listType}`}
+    >
+      <div>
+        <label>
+          <DigiFormCheckbox
+            afLabel={
+              listType === 'saved' ? 'Markera som sökt' : 'Avmarkera som sökt'
+            }
+            afVariation={FormCheckboxVariation.SECONDARY}
+            checked={job.applied}
+            onChange={() => handleToggleApplied(job.id)}
+          />
+        </label>
+      </div>
+
+      <div>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
-          <h2>Sparade jobb</h2>
+          <h3>{job.headline}</h3>
+          <p>{job.employer?.name}</p>
         </DigiTypography>
+      </div>
+
+      <div>
+        <AppButton onClick={() => handleRemoveJob(job.id)}>Ta bort</AppButton>
+      </div>
+    </DigiLayoutColumns>
+  );
+
+  return (
+    // Wrapper for all saved and applied jobs
+    <DigiLayoutBlock
+      afVariation={LayoutBlockVariation.TRANSPARENT}
+      className="save-job-wrapper"
+    >
+      <section>
+        <DigiTypography afVariation={TypographyVariation.SMALL}>
+          <h2 className="saved-title">Sparade jobb</h2>
+        </DigiTypography>
+
         {savedJobs.length === 0 ? (
           <DigiTypography afVariation={TypographyVariation.SMALL}>
             <p>Inga sparade jobb än.</p>
           </DigiTypography>
         ) : (
-          savedJobs.map((job) => (
-            <div key={`saved-${job.id}`}>
-              <DigiLayoutColumns
-                afElement={LayoutColumnsElement.DIV}
-                afVariation={LayoutColumnsVariation.THREE}
-              >
-                <div>
-                  <DigiFormCheckbox
-                    afLabel="Markera som sökt"
-                    afVariation={FormCheckboxVariation.SECONDARY}
-                    checked={job.applied}
-                    onChange={() => handleToggleApplied(job.id)}
-                  />
-                </div>
-
-                <div>
-                  <DigiTypography afVariation={TypographyVariation.SMALL}>
-                    <h3>{job.headline}</h3>
-                    <p>{job.employer?.name}</p>
-                  </DigiTypography>
-                </div>
-
-                <div>
-                  <AppButton onClick={() => handleRemoveJob(job.id)}>
-                    Ta bort
-                  </AppButton>
-                </div>
-              </DigiLayoutColumns>
-            </div>
-          ))
+          savedJobs.map((job) => renderJob(job, 'saved'))
         )}
-      </DigiLayoutBlock>
+      </section>
 
-      <DigiLayoutBlock>
+      <section className="applied-section">
         <DigiTypography afVariation={TypographyVariation.SMALL}>
-          <h2>Sökta jobb</h2>
+          <h2 className="applied-title">Sökta jobb</h2>
         </DigiTypography>
+
         {appliedJobs.length === 0 ? (
           <DigiTypography afVariation={TypographyVariation.SMALL}>
             <p>Inga sökta jobb än.</p>
           </DigiTypography>
         ) : (
-          appliedJobs.map((job) => (
-            <div key={`applied-${job.id}`}>
-              <DigiLayoutColumns
-                afElement={LayoutColumnsElement.DIV}
-                afVariation={LayoutColumnsVariation.THREE}
-              >
-                <div>
-                  <DigiFormCheckbox
-                    afLabel="Avmarkera som sökt"
-                    afVariation={FormCheckboxVariation.SECONDARY}
-                    checked={job.applied}
-                    onChange={() => handleToggleApplied(job.id)}
-                  />
-                </div>
-
-                <div>
-                  <DigiTypography afVariation={TypographyVariation.SMALL}>
-                  <h3>{job.headline}</h3>
-                  <p>{job.employer?.name}</p>
-                </DigiTypography>
-                </div>
-
-                <div>
-                  <h2>Test</h2>
-                </div>
-              </DigiLayoutColumns>
-            </div>
-          ))
+          appliedJobs.map((job) => renderJob(job, 'applied'))
         )}
-      </DigiLayoutBlock>
-    </>
+      </section>
+    </DigiLayoutBlock>
   );
 };

@@ -1,0 +1,33 @@
+/* saveJob.css */
+
+.save-job-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #BDDFDA;
+}
+
+.save-job-wrapper section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.job-row {
+    align-items: center;
+
+}
+
+.saved-title {
+    display: flex;
+    justify-content: center;
+}
+
+.applied-section {
+    margin-top: 80px;
+}
+
+.applied-title {
+    display: flex;
+    justify-content: center;
+}

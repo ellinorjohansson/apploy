@@ -40,12 +40,9 @@
     flex: 1;
 }
 
-.saved {
-    background-color: #f0f8ff;
-}
-
+.saved,
 .applied {
-    background-color: #f0f8ff;
+    background-color: #EDE7E3;
 }
 
 .saved-title,

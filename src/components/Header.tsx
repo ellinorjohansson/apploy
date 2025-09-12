@@ -1,5 +1,59 @@
+import { /*DigiHeader, DigiHeaderAvatar, */ DigiHeaderNavigation, DigiHeaderNavigationItem, DigiIconGlobe, DigiIconUserAlt, DigiMediaImage } from "@digi/arbetsformedlingen-react"
+import "./css/Header.css"
+import { Link, useNavigate } from "react-router-dom"
 export const Header = () => {
+
+
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate("/")
+    }
+
     return (
-        <></>
+        <>{/* 
+            <DigiHeader
+                afSystemName="Apploy"
+                afHideSystemName={false}
+                afMenuButtonText="Meny"
+            >
+                <a aria-label="Designsystemets startsida" href="/"></a> */}
+            <section className="header-wrapper">
+                <div className="header-container" slot="header-content">
+                    <div onClick={handleClick}>
+                        <DigiMediaImage
+                        afUnlazy
+                        afSrc='/svg/Logotyp.svg'
+                        afAlt="Hero image for Apploys homepage"
+                        ></DigiMediaImage>
+                    </div>
+                    <h1>Utforska aktuella jobbannonser från hela Sverige</h1>
+                    <div>
+                        <DigiIconGlobe></DigiIconGlobe>
+                        <DigiIconUserAlt>
+                    
+{/*                          <DigiHeaderAvatar            
+                        afName="Linda Karlsson"
+                        afSignature="KALIA"
+                        afIsLoggedIn={true}
+                        afHideSignature={true}
+                        ></DigiHeaderAvatar> */}
+                        </DigiIconUserAlt>
+                    </div>
+                </div>
+                <div slot="header-navigation">
+                    <DigiHeaderNavigation
+                        afCloseButtonText="Stäng"
+                        afCloseButtonAriaLabel="Stäng meny"
+                        afNavAriaLabel="Huvudmeny"
+                    >
+                        <DigiHeaderNavigationItem afCurrentPage={true}>
+                            <Link to="/user">Mina sparade jobb</Link>
+                        </DigiHeaderNavigationItem>
+                    </DigiHeaderNavigation>
+                </div>
+            </section>
+           {/*  </DigiHeader> */}
+        </>
     )
 }

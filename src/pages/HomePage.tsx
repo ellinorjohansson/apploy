@@ -1,14 +1,53 @@
 // HomePage.tsx
 
-import { NavLink } from "react-router-dom";
+import { LayoutBlockVariation } from "@digi/arbetsformedlingen";
+import { DigiLayoutBlock, DigiMediaImage, DigiLayoutContainer, DigiIconChevronDown } from "@digi/arbetsformedlingen-react/src/lib/stencil-generated/components";
+import { useNavigate } from "react-router-dom";
+import { AppButton } from "../components/buttons/AppButton";
+import { Chart } from "../components/Chart";
 
+
+import "../components/css/Homepage.css"
 export const HomePage = () => {
+
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate("/jobs")
+  }
+  
   return (
-    <section>
-      <h1>Home Page</h1>
-      <p>Välkommen</p>
-        <NavLink to={"/jobs"}>Till jobben</NavLink>
-        <NavLink to={"/user"}>Till din sida</NavLink>
-    </section>
+    <>
+      <div className="body-wrapper">
+        <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
+          <div className="intro-wrapper">
+            <DigiLayoutContainer 
+              afVerticalPadding
+              afNoGutter>
+              <h2>Hitta ditt drömjobb</h2>
+              <p>Upptäck tusentals aktuella jobbannonser från hela landet – anpassade efter dina intressen och mål.</p>
+              <p>Oavsett om du är ny i arbetslivet eller vill ta nästa steg i karriären finns möjligheten här. Din framtid börjar idag!</p>
+            </DigiLayoutContainer>
+          <AppButton onClick={handleClick} children={"Hitta nu"}></AppButton>
+          </div>
+            <figure className="hero-container">
+              <DigiMediaImage
+                afUnlazy
+                afFullwidth
+                afSrc='/images/Hero-image AF.png'
+                afAlt="Hero image for Apploys homepage"
+                >
+              </DigiMediaImage>
+              <a className="chevron-container" href="#chart-container">
+                <DigiIconChevronDown></DigiIconChevronDown>
+              </a>
+            </figure>
+            {/* <NavLink to={"/user"}>Till din sida</NavLink> */}
+        </DigiLayoutBlock>
+        <div id="chart-container">
+          <Chart></Chart>
+        </div>
+      </div>
+    </>
   );
 };

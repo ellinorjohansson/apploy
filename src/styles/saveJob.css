@@ -40,8 +40,12 @@
     flex: 1;
 }
 
-.saved,
+.saved {
+    background-color: #EDE7E3;
+}
+
 .applied {
+    opacity: 65%;
     background-color: #EDE7E3;
 }
 
@@ -52,5 +56,5 @@
 }
 
 .applied-section {
-    margin-top: 2rem;
+    margin-top: 6rem;
 }

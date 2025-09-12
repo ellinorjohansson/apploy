@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { fetchJobs } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
-import { useJobs } from "../hooks/useJobs"; // FLYTTA TILL DETAIL
-import { JobActionTypes } from "../reducers/SaveJobReducer"; // FLYTTA TILL DETAIL
 
 export const SearchJobsPage = () => {
 
@@ -19,10 +17,7 @@ export const SearchJobsPage = () => {
     const [loading, setLoading] = useState(false);
 
     // Number of jobs to load per page
-    const limit = 10;
-
-    const { dispatch } = useJobs(); // FLYTTA TILL DETAIL
-   
+    const limit = 10;   
     
    // Load jobs when the page loads or offset changes
    useEffect(() => {
@@ -41,12 +36,7 @@ export const SearchJobsPage = () => {
     // Run when user clicks "Visa fler"-button
     const handleLoadMore = () => {
         setOffset((prev) => prev + limit);
-    };
-
-    // FLYTTA TILL DETAIL + KNAPPEN I RETURN
-    const handleSaveJob = (job: JobAd) => {
-        dispatch({ type: JobActionTypes.ADDED, payload: job });
-    };
+    };    
     
     return (
     <>
@@ -57,9 +47,6 @@ export const SearchJobsPage = () => {
                         <li key={job.id}>
                             <span>{job.workplace_address?.region}</span>
                             <h2>{job.headline}</h2>
-                            <AppButton onClick={() => handleSaveJob(job)}>
-                                Spara jobb
-                            </AppButton>
                         </li>
                     ))} 
                 </ul>

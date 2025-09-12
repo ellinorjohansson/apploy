@@ -1,0 +1,8 @@
+:root {
+  /* Custom colors for our app */
+  --color-background: #BDDFDA; /* Main background */
+  --color-text: #0c0c0c; /* Textcolor black */
+  --color-text-secondary: #FBFBFB; /* Textcolor white */
+  --color-primary: #FFC108; /* Titel / buttons / icons */
+  --color-header-footer-bg: #035548; /* Header + footer background */
+}

@@ -11,9 +11,11 @@ interface AppButtonProps {
 export const AppButton = ({ onClick, children }: AppButtonProps) => {
   return (
     <DigiButton
+      className="app-button"
       onClick={onClick}
       afSize={ButtonSize.MEDIUM}
       afVariation={ButtonVariation.PRIMARY}
+      afColor="primary"
       afFullWidth={false}
     >
       {children}

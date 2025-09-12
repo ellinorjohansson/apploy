@@ -1,0 +1,19 @@
+/* Global styles */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--digi--global--typography--font-family--default);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}

@@ -3,11 +3,11 @@
 // This page allows users to search for jobs, filter by location and branch, and view results
 
 import { useEffect, useState } from "react";
-import { fetchJobs } from "../services/fetchJobServices";
+import { fetchJobs, type FetchJobsResult } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
-import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
+import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
 import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
 import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
 import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
@@ -44,11 +44,13 @@ const getFilterDescription = (
 };
 
 export const SearchJobsPage = () => {
-    // State for storing all loaded job advertisements
+    // State for storing current page job advertisements
     const [jobs, setJobs] = useState<JobAd[]>([])
 
-    // Track pagination offset for loading more jobs
-    const [offset, setOffset] = useState(0);
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalJobs, setTotalJobs] = useState(0)
 
     // Loading state to show loading indicator
     const [loading, setLoading] = useState(false);
@@ -60,18 +62,20 @@ export const SearchJobsPage = () => {
    
     
 
-    // Reset offset when filters change
+    // Reset to page 1 when filters change
     useEffect(() => {
-        setOffset(0);
+        setCurrentPage(1);
         setJobs([]); // Clear existing jobs when filters change
     }, [selectedBranches, selectedLocations, searchTerm]);
 
-    // Load jobs when the page loads or offset changes
+    // Load jobs when page or filters change
     useEffect(() => {
         const loadJobs = async () => {
             setLoading(true); // Show loading indicator
+            setJobs([]); // Clear existing jobs to prevent DOM conflicts
             
-            const newJobs = await fetchJobs(
+            const offset = (currentPage - 1) * JOBS_PER_PAGE;
+            const result: FetchJobsResult = await fetchJobs(
                 JOBS_PER_PAGE, 
                 offset, 
                 selectedBranches, 
@@ -79,21 +83,19 @@ export const SearchJobsPage = () => {
                 searchTerm
             );
             
-            console.log('New jobs loaded:', newJobs.length);
-            console.log('Applied filters:', { selectedBranches, selectedLocations, searchTerm });
-            console.log('API params being sent:', { selectedBranches, selectedLocations, searchTerm });
-            
-            setJobs((prev) => offset === 0 ? newJobs : [...prev, ...newJobs]);
+            setJobs(result.jobs);
+            setTotalJobs(result.total);
+            setTotalPages(Math.max(1, Math.ceil(result.total / JOBS_PER_PAGE)));
             setLoading(false); // Hide loading indicator
         };
 
-        // Load jobs whenever offset changes
+        // Load jobs whenever page or filters change
         loadJobs();
-    }, [offset, selectedBranches, selectedLocations, searchTerm]);
+    }, [currentPage, selectedBranches, selectedLocations, searchTerm]);
 
-    // Handle "Load more" button click - increases offset to load next page
-    const handleLoadMore = () => {
-        setOffset((prev) => prev + JOBS_PER_PAGE);
+    // Handle page change for pagination
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
     };
 
     /**
@@ -104,15 +106,16 @@ export const SearchJobsPage = () => {
         setSearchTerm('');
         setSelectedLocations([]);
         setSelectedBranches([]);
-        setOffset(0);
+        setCurrentPage(1);
         setJobs([]);
         
         // Fetch fresh jobs without any filters
         setLoading(true);
         try {
-            const freshJobs = await fetchJobs(JOBS_PER_PAGE, 0, [], [], '');
-            setJobs(freshJobs);
-            setOffset(JOBS_PER_PAGE);
+            const result = await fetchJobs(JOBS_PER_PAGE, 0, [], [], '');
+            setJobs(result.jobs);
+            setTotalJobs(result.total);
+            setTotalPages(Math.max(1, Math.ceil(result.total / JOBS_PER_PAGE)));
         } catch (error) {
             console.error('Error fetching fresh jobs:', error);
         } finally {
@@ -122,6 +125,9 @@ export const SearchJobsPage = () => {
 
     // Jobs are already filtered by the server, so we use them directly
     const filteredJobs = jobs;
+    
+    // Check if we have conflicting filters (search term takes priority)
+    const hasConflictingFilters = searchTerm.trim() && (selectedBranches.length > 0 || selectedLocations.length > 0);
     
     return (
         <div className="search-page">
@@ -136,11 +142,9 @@ export const SearchJobsPage = () => {
                         afType={FormInputType.SEARCH}
                         afButtonText="Sök"
                         onAfOnChange={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                            console.log('Search changed:', e.detail);
                             setSearchTerm(extractSearchValue(e));
                         }}
                         onAfOnSubmitSearch={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                            console.log('Search submitted:', e.detail);
                             setSearchTerm(extractSearchValue(e));
                         }}
                     />
@@ -155,11 +159,9 @@ export const SearchJobsPage = () => {
                                 label: county
                             }))}
                             onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                console.log('Location filter submitted:', e.detail);
                                 setSelectedLocations(extractCheckedItems(e));
                             }}
-                            onAfResetFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                console.log('Location filter reset:', e.detail);
+                            onAfResetFilter={() => {
                                 setSelectedLocations([]);
                             }}
                         />
@@ -173,11 +175,9 @@ export const SearchJobsPage = () => {
                                 label: branch || ''
                             }))}
                             onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                console.log('Branch filter submitted:', e.detail);
                                 setSelectedBranches(extractCheckedItems(e));
                             }}
-                            onAfResetFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                console.log('Branch filter reset:', e.detail);
+                            onAfResetFilter={() => {
                                 setSelectedBranches([]);
                             }}
                         />
@@ -186,7 +186,7 @@ export const SearchJobsPage = () => {
                 
                 {/* Display number of search results */}
                 <div className="search-results-info">
-                    Din sökning gav {filteredJobs.length} träffar/möjligheter
+                    Din sökning gav {totalJobs} träffar/möjligheter
                 </div>
                 
                 {/* Display current filter state */}
@@ -197,23 +197,33 @@ export const SearchJobsPage = () => {
                             <AppButton onClick={handleClearFilters} variant="secondary">Rensa filter</AppButton>
                         )}
                     </div>
+                    {hasConflictingFilters && (
+                        <div className="filter-warning">
+                            <p>Sökterm har prioritet - bransch- och ort-filter ignoreras</p>
+                        </div>
+                    )}
                 </div>
             </div>
             
             {/* Loading indicator */}
             {loading && <div className="loading-indicator">Laddar fler jobb...</div>}
             
-            {/* Job cards container - key prop forces re-render when filter results change */}
-            <DigiInfoCardMultiContainer key={filteredJobs.length}>
+            {/* Job cards container - key prop forces re-render when page or results change */}
+            <DigiInfoCardMultiContainer key={`page-${currentPage}-${filteredJobs.length}`}>
                 {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                 ))}
             </DigiInfoCardMultiContainer>
             
-            {/* Load more button for pagination */}
-            <div className="load-more-container">
-                <AppButton onClick={handleLoadMore}>Se fler</AppButton>
-            </div>
+            {/* Pagination */}
+            <DigiNavigationPagination
+                afTotalPages={totalPages}
+                afInitActivePage={currentPage}
+                onAfOnPageChange={(event: CustomEvent<number>) => {
+                    const newPage = event.detail;
+                    handlePageChange(newPage);
+                }}
+            />
         </div>
     )
 }

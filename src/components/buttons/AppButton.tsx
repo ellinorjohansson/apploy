@@ -7,13 +7,20 @@ interface AppButtonProps {
   onClick: () => void;
   children: React.ReactNode; // Says the component can recieve anything inside the tag
   variant?: 'primary' | 'secondary'; // Optional variant prop
+  disabled?: boolean; // Optional disabled prop
 }
 
-export const AppButton = ({ onClick, children, variant = 'primary' }: AppButtonProps) => {
+export const AppButton = ({ onClick, children, variant = 'primary', disabled = false }: AppButtonProps) => {
+  const handleClick = () => {
+    if (!disabled) {
+      onClick();
+    }
+  };
+
   return (
     <DigiButton
-      className="app-button"
-      onClick={onClick}
+      className={`app-button ${disabled ? 'disabled' : ''}`}
+      onClick={handleClick}
       afSize={ButtonSize.MEDIUM}
       afVariation={variant === 'secondary' ? ButtonVariation.SECONDARY : ButtonVariation.PRIMARY}
       afFullWidth={false}

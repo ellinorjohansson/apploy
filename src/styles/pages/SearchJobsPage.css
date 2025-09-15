@@ -123,6 +123,22 @@
   margin: 0;
 }
 
+.filter-warning {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.filter-warning p {
+  margin: 0;
+  color: #856404;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .filter-title {
   color: var(--color-text);
   font-size: 1.2rem;
@@ -140,12 +156,6 @@
   border-radius: 8px;
   border-left: 3px solid var(--color-primary);
 }
-
-.load-more-container {
-  text-align: center;
-  margin-top: 2rem;
-}
-
 
 .loading-indicator {
   text-align: center;

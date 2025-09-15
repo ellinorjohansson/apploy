@@ -76,4 +76,4 @@ export const JOB_BRANCHES = [
  * Number of jobs to load per page
  * This controls how many job advertisements are fetched and displayed at once
  */
-export const JOBS_PER_PAGE = 9;
+export const JOBS_PER_PAGE = 27;

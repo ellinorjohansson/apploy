@@ -7,7 +7,6 @@ export const Footer = () => {
 
 
     const handleClick = () => {
-        console.log("Klickat")
     }
     return (
         <>

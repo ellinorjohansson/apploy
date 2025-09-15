@@ -9,6 +9,14 @@ import { getRegionCodesForCounties } from "../constants/filterConstants";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://jobsearch.api.jobtechdev.se';
 
 /**
+ * Result interface for fetchJobs function
+ */
+export interface FetchJobsResult {
+    jobs: JobAd[];
+    total: number;
+}
+
+/**
  * Fetches jobs from JobTech API with server-side filtering
  * Uses 'brief' format for optimal performance - only essential fields are included
  * @param limit - Number of jobs to fetch
@@ -16,7 +24,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://jobsearch.api
  * @param selectedBranches - Array of branch categories to filter by
  * @param selectedLocations - Array of location filters
  * @param searchTerm - Text search term (uses 'q' parameter)
- * @returns Promise<JobAd[]> - Array of job advertisements
+ * @returns Promise<FetchJobsResult> - Object containing jobs array and total count
  */
 export async function fetchJobs(
     limit = 30, 
@@ -24,7 +32,7 @@ export async function fetchJobs(
     selectedBranches: string[] = [], 
     selectedLocations: string[] = [], 
     searchTerm: string = ""
-): Promise<JobAd[]> {
+): Promise<FetchJobsResult> {
     // If multiple locations are selected, we need to make separate API calls
     // and combine the results since JobTech API doesn't support multiple regions
     if (selectedLocations.length > 1) {
@@ -42,7 +50,7 @@ export async function fetchJobs(
  * @param selectedBranches - Array of branch categories to filter by
  * @param selectedLocations - Array of location filters (max 1)
  * @param searchTerm - Text search term
- * @returns Promise<JobAd[]> - Array of job advertisements
+ * @returns Promise<FetchJobsResult> - Object containing jobs array and total count
  */
 async function fetchJobsSingleRegion(
     limit = 30, 
@@ -50,7 +58,7 @@ async function fetchJobsSingleRegion(
     selectedBranches: string[] = [], 
     selectedLocations: string[] = [], 
     searchTerm: string = ""
-): Promise<JobAd[]> {
+): Promise<FetchJobsResult> {
     try {
         const params: Record<string, string | number | string[]> = {
             limit,
@@ -58,14 +66,17 @@ async function fetchJobsSingleRegion(
             format: 'brief' // Use brief format for better performance - only essential fields
         };
 
-        // Add text search using 'q' parameter (freetext query)
+        // JobTech API has limitations - it doesn't support all three parameters simultaneously
+        // We need to prioritize filters: q (search) > occupation-field (branch) > region (location)
+        
+        // Priority 1: Text search using 'q' parameter (highest priority)
         if (searchTerm.trim()) {
             params['q'] = searchTerm.trim();
             console.log('Searching for:', searchTerm);
+            console.log('Note: Using search term - other filters may be limited');
         }
-
-        // Add branch filtering using Taxonomy concept_ids
-        if (selectedBranches.length > 0) {
+        // Priority 2: Branch filtering (only if no search term)
+        else if (selectedBranches.length > 0) {
             // Get the primary concept_id for each selected branch (first one in the array)
             const primaryTaxonomyIds = selectedBranches.map(branch => {
                 const ids = getTaxonomyIdsForBranch(branch);
@@ -88,9 +99,9 @@ async function fetchJobsSingleRegion(
                 // params['occupation'] = specificOccupationIds.join(',');
             }
         }
-
-        // Add location filtering using region codes (single region only)
-        if (selectedLocations.length > 0) {
+        
+        // Priority 3: Location filtering (only if no search term and no branch filter)
+        if (selectedLocations.length > 0 && !searchTerm.trim() && selectedBranches.length === 0) {
             const regionCodes = getRegionCodesForCounties(selectedLocations);
             if (regionCodes.length > 0) {
                 // Use only the first region code for single region requests
@@ -98,26 +109,31 @@ async function fetchJobsSingleRegion(
                 console.log('Filtering by single region code:', regionCodes[0], 'for county:', selectedLocations[0]);
             }
         }
+        
+        // If we have both search term and other filters, we can only use search term
+        if (searchTerm.trim() && (selectedBranches.length > 0 || selectedLocations.length > 0)) {
+            console.warn('Search term takes priority - branch and location filters are ignored');
+        }
 
-        console.log('API request params:', params);
-        console.log('Full API URL:', `${API_BASE_URL}/search`);
-        
-        // Log the actual URL that will be called
-        const url = new URL(`${API_BASE_URL}/search`);
-        Object.entries(params).forEach(([key, value]) => {
-            url.searchParams.append(key, String(value));
-        });
-        console.log('Actual URL being called:', url.toString());
-
-        const response = await axios.get(`${API_BASE_URL}/search`, { params });
-        
-        console.log('API response total:', response.data?.total?.value);
-        console.log('API response hits count:', response.data?.hits?.length);
-        
-        return response.data?.hits || [];
+        try {
+            const response = await axios.get(`${API_BASE_URL}/search`, { params });
+            
+            return {
+                jobs: response.data?.hits || [],
+                total: response.data?.total?.value || 0
+            };
+        } catch (error) {
+            console.error('API call failed:', error);
+            if (error && typeof error === 'object' && 'response' in error) {
+                const axiosError = error as { response?: { data?: unknown; status?: number } };
+                console.error('Error response:', axiosError.response?.data);
+                console.error('Error status:', axiosError.response?.status);
+            }
+            throw error;
+        }
     } catch (error) {
         console.error('Error fetching jobs:', error);
-        return [];
+        return { jobs: [], total: 0 };
     }
 }
 
@@ -128,7 +144,7 @@ async function fetchJobsSingleRegion(
  * @param selectedBranches - Array of branch categories to filter by
  * @param selectedLocations - Array of location filters (multiple)
  * @param searchTerm - Text search term
- * @returns Promise<JobAd[]> - Combined array of job advertisements
+ * @returns Promise<FetchJobsResult> - Object containing combined jobs array and total count
  */
 async function fetchJobsMultipleRegions(
     limit = 30, 
@@ -136,10 +152,9 @@ async function fetchJobsMultipleRegions(
     selectedBranches: string[] = [], 
     selectedLocations: string[] = [], 
     searchTerm: string = ""
-): Promise<JobAd[]> {
+): Promise<FetchJobsResult> {
     try {
         const regionCodes = getRegionCodesForCounties(selectedLocations);
-        console.log('Fetching jobs for multiple regions:', regionCodes, 'for counties:', selectedLocations);
         
         // Calculate jobs per region (distribute evenly)
         const jobsPerRegion = Math.ceil(limit / selectedLocations.length);
@@ -152,19 +167,28 @@ async function fetchJobsMultipleRegions(
         const regionResults = await Promise.all(regionPromises);
         
         // Combine all results and remove duplicates based on job ID
-        const allJobs = regionResults.flat();
+        const allJobs = regionResults.flatMap(result => result.jobs);
         const uniqueJobs = allJobs.filter((job, index, self) => 
             index === self.findIndex(j => j.id === job.id)
         );
         
+        // Calculate total from all regions (sum of totals)
+        const totalFromAllRegions = regionResults.reduce((sum, result) => sum + result.total, 0);
+        
         // Limit to requested number of jobs
         const limitedJobs = uniqueJobs.slice(0, limit);
         
-        console.log(`Combined ${allJobs.length} jobs from ${regionCodes.length} regions, ${uniqueJobs.length} unique, returning ${limitedJobs.length}`);
-        
-        return limitedJobs;
+        return {
+            jobs: limitedJobs,
+            total: totalFromAllRegions
+        };
     } catch (error) {
         console.error('Error fetching jobs for multiple regions:', error);
-        return [];
+        if (error && typeof error === 'object' && 'response' in error) {
+            const axiosError = error as { response?: { data?: unknown; status?: number } };
+            console.error('Error response:', axiosError.response?.data);
+            console.error('Error status:', axiosError.response?.status);
+        }
+        return { jobs: [], total: 0 };
     }
 }

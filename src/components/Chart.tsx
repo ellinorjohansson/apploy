@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BarChartVariation } from "@digi/arbetsformedlingen";
 import { DigiBarChart } from "@digi/arbetsformedlingen-react";
-import { fetchJobs } from "../services/fetchJobServices";
+import { fetchChartJobs } from "../services/chartService"; 
 import type { JobAd } from "../types/jobs";
 
 interface ChartSeries {
@@ -24,20 +24,23 @@ export const Chart = () => {
   const [chartData, setChartData] = useState<ChartData>({
     data: {
       xValues: [],
-      series: [{ yValues: [], title: "Jobb" }], 
+      series: [{ yValues: [], title: "Jobb" }],
       xValueNames: [],
     },
     x: "Antal jobb",
     y: "Regioner",
-    title: "Antal jobb per region",
+    title: "Dagens jobb per region",
   });
+
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const loadJobs = async () => {
-      const jobs: JobAd[] = await fetchJobs(100);
+      setLoading(true);
+      const jobs: JobAd[] = await fetchChartJobs(100);
 
       const regionCounts: Record<string, number> = {};
-      jobs.forEach((job) => {
+      jobs.forEach(job => {
         const region = job.workplace_address?.region || "Okänd region";
         regionCounts[region] = (regionCounts[region] || 0) + 1;
       });
@@ -47,18 +50,23 @@ export const Chart = () => {
 
       setChartData({
         data: {
-          xValues: yValues, 
+          xValues: yValues,
           series: [{ yValues, title: "Jobb" }],
           xValueNames,
         },
         x: "Antal jobb",
         y: "Regioner",
-        title: "Antal jobb per region",
+        title: "Dagens jobb per region",
       });
+      setLoading(false);
     };
 
     loadJobs();
   }, []);
+
+  if (loading) {
+    return <div>Laddar diagram...</div>; 
+  }
 
   return (
     <div style={{ height: "400px", width: "600px" }}>

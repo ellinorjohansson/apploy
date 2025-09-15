@@ -16,9 +16,10 @@ import { useNavigate } from 'react-router-dom';
 import { AppButton } from '../components/buttons/AppButton';
 import { Chart } from '../components/Chart';
 
-import '../components/css/Homepage.css';
+import '../styles/pages/Homepage.css'
 import { DigiLayoutColumns } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
 import { DigiTypography } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
+
 export const HomePage = () => {
   const navigate = useNavigate();
 

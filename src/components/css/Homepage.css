@@ -40,3 +40,40 @@ figure {
     color: rgba(255, 166, 43, 0.7);
     height: 80px;
 }
+
+.sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
+    background-color: #BDDFDA;
+}
+
+.chart-wrapper {
+    padding: 100px 0;
+}
+
+.chart-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 35vw;
+    border-right: 2px solid black;
+    padding-right: 20px;
+}
+
+.bar {
+  fill: #035548;
+}
+
+.sc-digi-button-h .digi-button--variation-function.sc-digi-button {
+    color: #333436;
+}
+
+.sc-digi-button-h .digi-button--variation-function.sc-digi-button:hover {
+    color: #035548; 
+}
+
+.sc-digi-icon-table-h svg.sc-digi-icon-table {
+    color: #333436;
+}
+
+.sc-digi-icon-chart-h svg.sc-digi-icon-chart {
+    color: #333436;
+}

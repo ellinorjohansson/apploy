@@ -57,18 +57,21 @@ export const HomePage = () => {
           </figure>
           {/* <NavLink to={"/user"}>Till din sida</NavLink> */}
         </DigiLayoutBlock>
-        <div id="chart-container">
+        <div id="chart-container" className='chart-wrapper'>
           <DigiLayoutBlock>
             <DigiLayoutColumns
               afElement={LayoutColumnsElement.DIV}
               afVariation={LayoutColumnsVariation.TWO}
             >
-              <div>
-                <DigiTypography
-                  afVariation={TypographyVariation.SMALL}
-                >
-                  <h2>Diagram</h2>
-                  <p>blablabla</p>
+              <div className='chart-text'>
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                  <h2>Dagens jobb per region</h2>
+                  <p>
+                    Diagrammet visar hur många jobbannonser som har publicerats
+                    de senaste 24 timmarna, uppdelat per region. Staplarna
+                    representerar antal jobb i varje län, vilket gör det enkelt
+                    att se var flest jobb är tillgängliga just idag.
+                  </p>
                 </DigiTypography>
               </div>
               <div>

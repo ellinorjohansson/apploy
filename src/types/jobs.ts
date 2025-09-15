@@ -57,6 +57,7 @@ export interface Concept {
 }
 
 export interface Occupation {
+  concept_id?: string;
   label?: string;
 }
 

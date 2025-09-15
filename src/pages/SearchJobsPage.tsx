@@ -1,4 +1,6 @@
 // SearchJobsPage.tsx
+// Main component for searching and filtering job advertisements
+// This page allows users to search for jobs, filter by location and branch, and view results
 
 import { useEffect, useState } from "react";
 import { fetchJobs } from "../services/fetchJobServices";
@@ -7,109 +9,91 @@ import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
 import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
 import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
+import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
+import { filterJobs, getFilterDescription } from "../helpers/filterHelpers";
+import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
+import { getJobBranch } from "../helpers/jobBranchClassifier";
 
 export const SearchJobsPage = () => {
-
-    // Store jobs from the API
+    // State for storing all loaded job advertisements
     const [jobs, setJobs] = useState<JobAd[]>([])
 
-    // Track how many jobs we have loaded
+    // Track pagination offset for loading more jobs
     const [offset, setOffset] = useState(0);
 
-    // Track if we are currently loading jobs
+    // Loading state to show loading indicator
     const [loading, setLoading] = useState(false);
 
-    // Number of jobs to load per page
-    const limit = 9;
-
-    // Filter states - now arrays to support multiple selections
+    // Filter states - arrays to support multiple selections
     const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
     const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
-
-    // Swedish counties
-    const swedishCounties = [
-        "Stockholms län", "Västra Götalands län", "Skåne län", "Uppsala län", 
-        "Östergötlands län", "Västerbottens län", "Norrbottens län", "Värmlands län",
-        "Örebro län", "Västmanlands län", "Dalarnas län", "Gävleborgs län",
-        "Västernorrlands län", "Jämtlands län", "Kronobergs län", "Kalmar län",
-        "Gotlands län", "Blekinge län", "Hallands län", "Södermanlands län"
-    ];
-
-    // All possible branches from JobTech API
-    const allBranches = [
-        "Administration, ekonomi, juridik",
-        "Bygg, anläggning, installation",
-        "Data, IT, telekommunikation",
-        "Försäljning, inköp, marknadsföring",
-        "Hantverk, tillverkning, transport",
-        "Hälsa, medicin, vård, omsorg",
-        "Hotell, restaurang, storhushåll",
-        "Kultur, media, design",
-        "Lantbruk, skogsbruk, trädgård",
-        "Naturvetenskap, teknik",
-        "Pedagogik, utbildning, forskning",
-        "Rättsväsende, säkerhet, försvar",
-        "Socialt arbete, omsorg, boende",
-        "Teknik, tillverkning, transport",
-        "Turism, sport, fritid"
-    ];
    
     
-   // Load jobs when the page loads or offset changes
-   useEffect(() => {
-    const loadJobs = async () => {
-        setLoading(true); // Start loading
-        const newJobs = await fetchJobs(limit, offset); // Fetch jobs from API
-        setJobs((prev) => [...prev, ...newJobs]); // Add new jobs to the list
-        setLoading(false); // Stop loading
-    };
 
-    // This effect calls loadJobs() to fetch new jobs from the API whenever the `offset` changes, allowing the list to update and load more jobs when the user clicks "Load more".
-    loadJobs();
+    // Load jobs when the page loads or offset changes
+    useEffect(() => {
+        const loadJobs = async () => {
+            setLoading(true); // Show loading indicator
+            const newJobs = await fetchJobs(JOBS_PER_PAGE, offset); // Fetch jobs from API
+            
+            // Debug: Log occupation labels to see what's available
+            console.log('New jobs loaded:', newJobs.length);
+            const occupationLabels = newJobs.map(job => job.occupation?.label).filter(Boolean);
+            console.log('Occupation labels from API:', [...new Set(occupationLabels)]);
+            
+            // Debug: Test branch classification for first 5 jobs
+            if (newJobs.length > 0) {
+                console.log('Testing branch classification for first 5 jobs:');
+                newJobs.slice(0, 5).forEach((job, index) => {
+                    const branch = getJobBranch(job);
+                    console.log(`Job ${index + 1}:`, {
+                        headline: job.headline,
+                        occupation: job.occupation?.label,
+                        classifiedBranch: branch
+                    });
+                });
+                
+                // Debug: Check for media/design jobs specifically
+                console.log('Looking for media/design jobs:');
+                newJobs.forEach((job, index) => {
+                    const occupationLabel = job.occupation?.label?.toLowerCase() || '';
+                    if (occupationLabel.includes('design') || 
+                        occupationLabel.includes('media') || 
+                        occupationLabel.includes('foto') || 
+                        occupationLabel.includes('journalist') ||
+                        occupationLabel.includes('grafisk') ||
+                        occupationLabel.includes('video') ||
+                        occupationLabel.includes('film') ||
+                        occupationLabel.includes('reklam') ||
+                        occupationLabel.includes('konst') ||
+                        occupationLabel.includes('fotograf') ||
+                        occupationLabel.includes('kreativ')) {
+                        const branch = getJobBranch(job);
+                        console.log(`Media/Design job ${index + 1}:`, {
+                            headline: job.headline,
+                            occupation: job.occupation?.label,
+                            classifiedBranch: branch
+                        });
+                    }
+                });
+            }
+            
+            setJobs((prev) => [...prev, ...newJobs]); // Append new jobs to existing list
+            setLoading(false); // Hide loading indicator
+        };
+
+        // Load jobs whenever offset changes (pagination)
+        loadJobs();
     }, [offset]);
 
-
-    // Run when user clicks "Visa fler"-button
+    // Handle "Load more" button click - increases offset to load next page
     const handleLoadMore = () => {
-        setOffset((prev) => prev + limit);
+        setOffset((prev) => prev + JOBS_PER_PAGE);
     };
 
-    // Filter jobs based on selected filters
-    const filteredJobs = jobs.filter(job => {
-        const matchesLocation = selectedLocations.length === 0 || selectedLocations.includes(job.workplace_address?.region || '');
-        const matchesBranch = selectedBranches.length === 0 || selectedBranches.includes(job.occupation?.label || '');
-        // Enhanced search - search in multiple fields
-        const matchesSearch = !searchTerm || (() => {
-            const searchLower = String(searchTerm).toLowerCase();
-            return (
-                job.headline?.toLowerCase().includes(searchLower) ||
-                job.employer?.name?.toLowerCase().includes(searchLower) ||
-                job.employer?.workplace?.toLowerCase().includes(searchLower) ||
-                job.occupation?.label?.toLowerCase().includes(searchLower) ||
-                job.workplace_address?.region?.toLowerCase().includes(searchLower) ||
-                job.workplace_address?.municipality?.toLowerCase().includes(searchLower) ||
-                job.description?.text?.toLowerCase().includes(searchLower) ||
-                job.freetext_concepts?.some(concept => 
-                    concept.label?.toLowerCase().includes(searchLower)
-                )
-            );
-        })();
-        
-        return matchesLocation && matchesBranch && matchesSearch;
-    });
-
-    // Generate filter description
-    const getFilterDescription = () => {
-        console.log('Current filter state:', { selectedLocations, selectedBranches, searchTerm });
-        const filters = [];
-        if (selectedLocations.length > 0) filters.push(`Ort: ${selectedLocations.join(", ")}`);
-        if (selectedBranches.length > 0) filters.push(`Bransch: ${selectedBranches.join(", ")}`);
-        if (searchTerm) filters.push(`Sökord: "${searchTerm}"`);
-        
-        if (filters.length === 0) return "Inga filter applicerade";
-        return `Aktiva filter: ${filters.join(", ")}`;
-    };
+    // Apply all active filters to the job list
+    const filteredJobs = filterJobs(jobs, selectedLocations, selectedBranches, searchTerm);
     
     return (
         <div className="search-page">
@@ -120,6 +104,7 @@ export const SearchJobsPage = () => {
             
             <div className="search-section">
                 <div className="search-bar-container">
+                    {/* Main search input */}
                     <DigiFormInputSearch
                         afLabel="Sök jobb"
                         afVariation={FormInputSearchVariation.LARGE}
@@ -127,70 +112,44 @@ export const SearchJobsPage = () => {
                         afButtonText="Sök"
                         onAfOnChange={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                             console.log('Search changed:', e.detail);
-                            // Handle different event types
-                            let searchValue = '';
-                            if (e.detail && typeof e.detail === 'object' && 'value' in e.detail) {
-                                searchValue = e.detail.value;
-                            } else if (typeof e.detail === 'string') {
-                                searchValue = e.detail;
-                            } else if (e.detail && e.detail.target && e.detail.target.value !== undefined) {
-                                searchValue = e.detail.target.value;
-                            }
-                            setSearchTerm(String(searchValue));
+                            setSearchTerm(extractSearchValue(e));
                         }}
                         onAfOnSubmitSearch={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                             console.log('Search submitted:', e.detail);
-                            // Handle different event types
-                            let searchValue = '';
-                            if (e.detail && typeof e.detail === 'object' && 'value' in e.detail) {
-                                searchValue = e.detail.value;
-                            } else if (typeof e.detail === 'string') {
-                                searchValue = e.detail;
-                            } else if (e.detail && e.detail.target && e.detail.target.value !== undefined) {
-                                searchValue = e.detail.target.value;
-                            }
-                            setSearchTerm(String(searchValue));
+                            setSearchTerm(extractSearchValue(e));
                         }}
                     />
                     <div className="filter-dropdowns">
+                        {/* Location filter dropdown */}
                         <DigiFormFilter
                             afFilterButtonText="Ort"
                             afSubmitButtonText="Filtrera"
                             afName="Välj ort"
-                            afListItems={swedishCounties.map(county => ({
+                            afListItems={SWEDISH_COUNTIES.map(county => ({
                                 id: county,
                                 label: county
                             }))}
                             onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                                 console.log('Location filter submitted:', e.detail);
-                                // Handle FormFilterState: {listItems, checked}
-                                if (e.detail && e.detail.checked) {
-                                    setSelectedLocations(e.detail.checked);
-                                } else {
-                                    setSelectedLocations([]);
-                                }
+                                setSelectedLocations(extractCheckedItems(e));
                             }}
                             onAfResetFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                                 console.log('Location filter reset:', e.detail);
                                 setSelectedLocations([]);
                             }}
                         />
+                        {/* Branch filter dropdown */}
                         <DigiFormFilter
                             afFilterButtonText="Bransch"
                             afSubmitButtonText="Filtrera"
                             afName="Välj bransch"
-                            afListItems={allBranches.map(branch => ({
-                                id: branch,
-                                label: branch
+                            afListItems={JOB_BRANCHES.map(branch => ({
+                                id: branch || '',
+                                label: branch || ''
                             }))}
                             onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                                 console.log('Branch filter submitted:', e.detail);
-                                // Handle FormFilterState: {listItems, checked}
-                                if (e.detail && e.detail.checked) {
-                                    setSelectedBranches(e.detail.checked);
-                                } else {
-                                    setSelectedBranches([]);
-                                }
+                                setSelectedBranches(extractCheckedItems(e));
                             }}
                             onAfResetFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                                 console.log('Branch filter reset:', e.detail);
@@ -200,23 +159,28 @@ export const SearchJobsPage = () => {
                     </div>
                 </div>
                 
+                {/* Display number of search results */}
                 <div className="search-results-info">
                     Din sökning gav {filteredJobs.length} träffar/möjligheter
                 </div>
                 
+                {/* Display current filter state */}
                 <div className="filter-section">
-                    <p className="filter-description">{getFilterDescription()}</p>
+                    <p className="filter-description">{getFilterDescription(selectedLocations, selectedBranches, searchTerm)}</p>
                 </div>
             </div>
             
-            {loading && <div className="loading-indicator">Loading jobs...</div>}
+            {/* Loading indicator */}
+            {loading && <div className="loading-indicator">Laddar fler jobb...</div>}
             
+            {/* Job cards container - key prop forces re-render when filter results change */}
             <DigiInfoCardMultiContainer key={filteredJobs.length}>
                 {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                 ))}
             </DigiInfoCardMultiContainer>
             
+            {/* Load more button for pagination */}
             <div className="load-more-container">
                 <AppButton onClick={handleLoadMore}>Se fler</AppButton>
             </div>

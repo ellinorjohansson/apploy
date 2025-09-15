@@ -8,9 +8,12 @@ export interface JobAd {
   number_of_vacancies?: number;
   description?: JobAdDescription;
   employer?: Employer;
+  salary_description: string
+  salary_type: Salary
   workplace_address?: WorkplaceAddress;
   application_details?: ApplicationDetails;
   scope_of_work?: ScopeOfWork;
+  logo_url:	string;
   working_hours_type?: Concept;
   duration?: Concept;
   occupation?: Occupation;
@@ -29,6 +32,10 @@ export interface Employer {
   name?: string;
   workplace?: string;
   url?: string;
+}
+
+export interface Salary {
+  label: string
 }
 
 export interface WorkplaceAddress {

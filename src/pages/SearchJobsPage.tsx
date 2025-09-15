@@ -8,6 +8,7 @@ import { JobCard } from "../components/JobCard";
 import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
 import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
 
+
 export const SearchJobsPage = () => {
 
     // Store jobs from the API
@@ -54,7 +55,7 @@ export const SearchJobsPage = () => {
         "Teknik, tillverkning, transport",
         "Turism, sport, fritid"
     ];
-   
+
     
    // Load jobs when the page loads or offset changes
    useEffect(() => {
@@ -68,7 +69,6 @@ export const SearchJobsPage = () => {
     // This effect calls loadJobs() to fetch new jobs from the API whenever the `offset` changes, allowing the list to update and load more jobs when the user clicks "Load more".
     loadJobs();
     }, [offset]);
-
 
     // Run when user clicks "Visa fler"-button
     const handleLoadMore = () => {
@@ -213,7 +213,7 @@ export const SearchJobsPage = () => {
             
             <DigiInfoCardMultiContainer key={filteredJobs.length}>
                 {filteredJobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
+                    <JobCard key={job.id} job={job}/>
                 ))}
             </DigiInfoCardMultiContainer>
             

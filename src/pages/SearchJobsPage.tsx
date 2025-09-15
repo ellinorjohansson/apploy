@@ -10,9 +10,38 @@ import { JobCard } from "../components/JobCard";
 import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter } from "@digi/arbetsformedlingen-react";
 import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
 import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
-import { filterJobs, getFilterDescription } from "../helpers/filterHelpers";
 import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
-import { getJobBranch } from "../helpers/jobBranchClassifier";
+
+/**
+ * Generates a description of the current active filters
+ * @param selectedLocations - Array of selected locations
+ * @param selectedBranches - Array of selected branches  
+ * @param searchTerm - Current search term
+ * @returns Description string of active filters
+ */
+const getFilterDescription = (
+    selectedLocations: string[], 
+    selectedBranches: string[], 
+    searchTerm: string
+): string => {
+    const filters = [];
+    
+    if (selectedLocations.length > 0) {
+        filters.push(`Ort: ${selectedLocations.join(', ')}`);
+    }
+    
+    if (selectedBranches.length > 0) {
+        filters.push(`Bransch: ${selectedBranches.join(', ')}`);
+    }
+    
+    if (searchTerm.trim()) {
+        filters.push(`Sökord: "${searchTerm}"`);
+    }
+    
+    return filters.length > 0 
+        ? `Aktiva filter: ${filters.join(' | ')}`
+        : 'Inga filter aktiva - visar alla jobb';
+};
 
 export const SearchJobsPage = () => {
     // State for storing all loaded job advertisements
@@ -31,77 +60,73 @@ export const SearchJobsPage = () => {
    
     
 
+    // Reset offset when filters change
+    useEffect(() => {
+        setOffset(0);
+        setJobs([]); // Clear existing jobs when filters change
+    }, [selectedBranches, selectedLocations, searchTerm]);
+
     // Load jobs when the page loads or offset changes
     useEffect(() => {
         const loadJobs = async () => {
             setLoading(true); // Show loading indicator
-            const newJobs = await fetchJobs(JOBS_PER_PAGE, offset); // Fetch jobs from API
             
-            // Debug: Log occupation labels to see what's available
+            const newJobs = await fetchJobs(
+                JOBS_PER_PAGE, 
+                offset, 
+                selectedBranches, 
+                selectedLocations, 
+                searchTerm
+            );
+            
             console.log('New jobs loaded:', newJobs.length);
-            const occupationLabels = newJobs.map(job => job.occupation?.label).filter(Boolean);
-            console.log('Occupation labels from API:', [...new Set(occupationLabels)]);
+            console.log('Applied filters:', { selectedBranches, selectedLocations, searchTerm });
+            console.log('API params being sent:', { selectedBranches, selectedLocations, searchTerm });
             
-            // Debug: Test branch classification for first 5 jobs
-            if (newJobs.length > 0) {
-                console.log('Testing branch classification for first 5 jobs:');
-                newJobs.slice(0, 5).forEach((job, index) => {
-                    const branch = getJobBranch(job);
-                    console.log(`Job ${index + 1}:`, {
-                        headline: job.headline,
-                        occupation: job.occupation?.label,
-                        classifiedBranch: branch
-                    });
-                });
-                
-                // Debug: Check for media/design jobs specifically
-                console.log('Looking for media/design jobs:');
-                newJobs.forEach((job, index) => {
-                    const occupationLabel = job.occupation?.label?.toLowerCase() || '';
-                    if (occupationLabel.includes('design') || 
-                        occupationLabel.includes('media') || 
-                        occupationLabel.includes('foto') || 
-                        occupationLabel.includes('journalist') ||
-                        occupationLabel.includes('grafisk') ||
-                        occupationLabel.includes('video') ||
-                        occupationLabel.includes('film') ||
-                        occupationLabel.includes('reklam') ||
-                        occupationLabel.includes('konst') ||
-                        occupationLabel.includes('fotograf') ||
-                        occupationLabel.includes('kreativ')) {
-                        const branch = getJobBranch(job);
-                        console.log(`Media/Design job ${index + 1}:`, {
-                            headline: job.headline,
-                            occupation: job.occupation?.label,
-                            classifiedBranch: branch
-                        });
-                    }
-                });
-            }
-            
-            setJobs((prev) => [...prev, ...newJobs]); // Append new jobs to existing list
+            setJobs((prev) => offset === 0 ? newJobs : [...prev, ...newJobs]);
             setLoading(false); // Hide loading indicator
         };
 
-        // Load jobs whenever offset changes (pagination)
+        // Load jobs whenever offset changes
         loadJobs();
-    }, [offset]);
+    }, [offset, selectedBranches, selectedLocations, searchTerm]);
 
     // Handle "Load more" button click - increases offset to load next page
     const handleLoadMore = () => {
         setOffset((prev) => prev + JOBS_PER_PAGE);
     };
 
-    // Apply all active filters to the job list
-    const filteredJobs = filterJobs(jobs, selectedLocations, selectedBranches, searchTerm);
+    /**
+     * Clears all active filters and resets the job search
+     * Resets search term, selected locations, selected branches, and fetches fresh jobs
+     */
+    const handleClearFilters = async () => {
+        setSearchTerm('');
+        setSelectedLocations([]);
+        setSelectedBranches([]);
+        setOffset(0);
+        setJobs([]);
+        
+        // Fetch fresh jobs without any filters
+        setLoading(true);
+        try {
+            const freshJobs = await fetchJobs(JOBS_PER_PAGE, 0, [], [], '');
+            setJobs(freshJobs);
+            setOffset(JOBS_PER_PAGE);
+        } catch (error) {
+            console.error('Error fetching fresh jobs:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Jobs are already filtered by the server, so we use them directly
+    const filteredJobs = jobs;
     
     return (
         <div className="search-page">
-            <div className="search-header">
-                <h1 className="search-title">Utforska aktuella jobbannonser från hela Sverige</h1>
-                <p className="search-subtitle">Hitta ditt nästa jobb bland tusentals möjligheter</p>
-            </div>
-            
+            <h3 className="search-subtitle">Hitta ditt nästa jobb bland tusentals möjligheter</h3>
+           
             <div className="search-section">
                 <div className="search-bar-container">
                     {/* Main search input */}
@@ -166,7 +191,12 @@ export const SearchJobsPage = () => {
                 
                 {/* Display current filter state */}
                 <div className="filter-section">
-                    <p className="filter-description">{getFilterDescription(selectedLocations, selectedBranches, searchTerm)}</p>
+                    <div className="filter-header">
+                        <p className="filter-description">{getFilterDescription(selectedLocations, selectedBranches, searchTerm)}</p>
+                        {(selectedBranches.length > 0 || selectedLocations.length > 0 || searchTerm.trim()) && (
+                            <AppButton onClick={handleClearFilters} variant="secondary">Rensa filter</AppButton>
+                        )}
+                    </div>
                 </div>
             </div>
             

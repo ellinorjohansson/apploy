@@ -1,4 +1,6 @@
-
+.body-wrapper {
+    width: 100vw;
+}
 .main-wrapper {
     display: grid;
     grid-template-columns: repeat( 12, 1fr);

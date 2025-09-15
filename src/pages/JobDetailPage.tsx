@@ -254,7 +254,7 @@ export const JobsDetailPage = () => {
                 </span>
               )}
               </p>
-            <li className="button-wrapper">
+            <div className="button-wrapper">
               <AppButton
               onClick={() => (handleClick)} children={"Ansök"}>
               </AppButton>
@@ -262,7 +262,7 @@ export const JobsDetailPage = () => {
               <AppButton 
               onClick={() => handleSaveJob(job)} children={"Spara"}>
               </AppButton>
-            </li>
+            </div>
           </li>
         </DigiList>
       </section>

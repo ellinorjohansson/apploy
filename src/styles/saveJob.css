@@ -1,0 +1,60 @@
+/* saveJob.css */
+
+.sc-digi-form-checkbox-h {
+    --digi--form-checkbox--background-color--secondary: #FFC108;
+}
+
+.save-job-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #BDDFDA;
+}
+
+.save-job-wrapper section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.job-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    gap: 2rem;
+    box-sizing: border-box;
+}
+
+.job-row>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.saved {
+    background-color: #EDE7E3;
+}
+
+.applied {
+    opacity: 65%;
+    background-color: #EDE7E3;
+}
+
+.saved-title,
+.applied-title {
+    display: flex;
+    justify-content: center;
+}
+
+.applied-section {
+    margin-top: 6rem;
+}

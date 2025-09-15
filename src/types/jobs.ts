@@ -16,6 +16,7 @@ export interface JobAd {
   occupation?: Occupation;
   weighted_jobtech_taxonomy_items?: WeightedJobtechTaxonomyItem[];
   freetext_concepts?: FreetextConcept[];
+  applied?: boolean;
 }
 
 export interface JobAdDescription {

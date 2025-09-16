@@ -7,7 +7,6 @@
   justify-content: center;
 }
 
-/* Override the DigiNotificationErrorPage internal padding */
 .error-page .sc-digi-notification-error-page-h {
   --digi--notification-error-page--padding-top--desktop: 0;
   --digi--notification-error-page--padding-top--mobile: 0;

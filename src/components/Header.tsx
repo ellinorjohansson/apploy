@@ -1,10 +1,11 @@
 import { /*DigiHeader, DigiHeaderAvatar, */ DigiHeaderNavigation, DigiHeaderNavigationItem, DigiIconGlobe, DigiIconUserAlt, DigiMediaImage } from "@digi/arbetsformedlingen-react"
 import "../styles/components/Header.css"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 export const Header = () => {
 
 
     const navigate = useNavigate()
+    const location = useLocation() // För berätta för navigationen vilken sida så att komponenten kan visa användaren tyldigt vilken sida man är på
 
     const handleClick = () => {
         navigate("/")
@@ -47,8 +48,23 @@ export const Header = () => {
                         afCloseButtonAriaLabel="Stäng meny"
                         afNavAriaLabel="Huvudmeny"
                     >
-                        <DigiHeaderNavigationItem afCurrentPage={true}>
-                            <Link to="/user">Mina sparade jobb</Link>
+                        <DigiHeaderNavigationItem afCurrentPage={location.pathname === "/"}> {/* Kopplat till useLocation() */}
+                            <Link to="/">Välkommen</Link>
+                        </DigiHeaderNavigationItem>
+                        <DigiHeaderNavigationItem afCurrentPage={location.pathname === "/jobs"}>
+                            <Link to="/jobs">Utforska jobbannonser</Link>
+                        </DigiHeaderNavigationItem>
+                        <DigiHeaderNavigationItem afCurrentPage={location.pathname === "/user"}>
+						    <Link to="/user">Mina sparade jobb</Link>
+                        </DigiHeaderNavigationItem>
+                        <DigiHeaderNavigationItem>
+                            <a href="/">Tips för CV & ansökan</a>
+                        </DigiHeaderNavigationItem>
+                        <DigiHeaderNavigationItem>
+                            <a href="/">Karriärguide</a>
+                        </DigiHeaderNavigationItem>
+                         <DigiHeaderNavigationItem>
+                            <a href="/">Lär dig mer om branscher</a>
                         </DigiHeaderNavigationItem>
                     </DigiHeaderNavigation>
                 </div>

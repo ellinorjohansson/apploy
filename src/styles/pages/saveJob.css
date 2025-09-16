@@ -1,59 +1,62 @@
-/* saveJob.css */
-
 .sc-digi-form-checkbox-h {
     --digi--form-checkbox--background-color--secondary: #FFC108;
 }
 
 .save-job-body {
-    width: 100vw;
     display: flex;
     justify-content: center;
-    & .sc-digi-layout-block-h {
     width: 100%;
+}
+
+.save-job-body .sc-digi-layout-block-h {
     display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     border-radius: 15px;
-    padding: 0;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    }
+    padding: 40px 0;
 }
 
 .save-job-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 32px;
+    padding: 32px;
     background-color: #BDDFDA;
+    width: 100%;
+    max-width: 900px; /* centrerad och begränsad bredd */
+    box-sizing: border-box;
 }
 
 .save-job-wrapper section {
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 24px;
+    align-items: center;
 }
 
 .job-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* mer naturlig spacing */
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding: 16px 24px;
     border-radius: 8px;
-    margin-bottom: 1rem;
-    gap: 2rem;
+    margin-bottom: 16px;
+    gap: 24px;
     box-sizing: border-box;
+    flex-wrap: wrap; /* radbryt på små skärmar */
 }
 
-.job-row>div {
+.job-row > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 0.5rem;
-    flex: 1;
+    gap: 8px;
+    flex: 0 1 auto; /* växer naturligt istället för lika stort */
+    min-width: 140px; /* extra luft */
 }
 
 .saved {
@@ -69,8 +72,9 @@
 .applied-title {
     display: flex;
     justify-content: center;
+    font-size: 1.25rem;
 }
 
 .applied-section {
-    margin-top: 6rem;
+    margin-top: 96px;
 }

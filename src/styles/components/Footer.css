@@ -1,7 +1,9 @@
 .foot-wrapper {
     & .sc-digi-layout-block-h {
     --digi--layout-block--background--profile: var(--color-header-footer-bg);
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     }
 }
 .foot-container {

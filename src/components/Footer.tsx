@@ -7,7 +7,6 @@ export const Footer = () => {
 
 
     const handleClick = () => {
-        console.log("Klickat")
     }
     const handleReturn = () => {
         window.scrollTo({ top: 0, left: 0})

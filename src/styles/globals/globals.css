@@ -1,7 +1,7 @@
 /* Global styles */
 #root {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -16,4 +16,8 @@ body {
   font-family: var(--digi--global--typography--font-family--default);
   background-color: var(--color-background);
   color: var(--color-text);
+}
+
+html {
+  scroll-behavior: smooth; /* Mjuk scrollning på hela sidan */
 }

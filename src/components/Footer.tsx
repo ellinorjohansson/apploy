@@ -1,6 +1,6 @@
 import { FooterVariation, FooterCardVariation} from "@digi/arbetsformedlingen"
 import { DigiFooter, DigiFooterCard, DigiIconAccessibilityUniversal, DigiIconSign, DigiIconGlobe, DigiIconEnvelope } from "@digi/arbetsformedlingen-react"
-import "./css/Footer.css"
+import "../styles/components/Footer.css"
 import { AppButton } from "./buttons/AppButton"
 
 export const Footer = () => {
@@ -10,9 +10,9 @@ export const Footer = () => {
         console.log("Klickat")
     }
     return (
-        <>
+        <div className="foot-wrapper">
             <DigiFooter afVariation={FooterVariation.SMALL}>
-                <div slot="content-top" className="foot-wrapper">
+                <div slot="content-top" className="foot-container">
                     <div className="first-wrapper">
                         <DigiFooterCard afType={FooterCardVariation.ICON}>
                             <ul>
@@ -116,6 +116,6 @@ export const Footer = () => {
                     <a href="#">Instagram</a>
                 </div>
             </DigiFooter>
-        </>
+        </div>
     )
 }

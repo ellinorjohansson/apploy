@@ -1,4 +1,6 @@
-
+.body-wrapper {
+    width: 100vw;
+}
 .main-wrapper {
     display: grid;
     grid-template-columns: repeat( 12, 1fr);
@@ -7,7 +9,7 @@
     margin-bottom: 50px;
 }
 .headline-wrapper {
-    background-color: var(--color-text-secondary);
+    background-color: var(--color-text);
     grid-column: 2 / 12;
     display: flex;
     align-items: center;
@@ -52,7 +54,7 @@
     grid-column: 9/ 12;
     grid-row: 3;
     text-align: center;
-    background-color: var( --color-text-secondary);
+    background-color: var( --color-text);
     border-radius: 15px;
 }
 .section-wrapper {
@@ -91,6 +93,7 @@
 }
 .sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
     border-radius: 15px;
+    background-color: var(--color-text);
 }
 ul.digi-list__list.sc-digi-list {
     list-style: none;
@@ -142,4 +145,11 @@ ul.digi-list__list.sc-digi-list :nth-child(5){
 }
 .sc-digi-icon-chevron-up-h svg.sc-digi-icon-chevron-up {
     color: var(--color-primary);
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }

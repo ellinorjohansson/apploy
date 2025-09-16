@@ -7,6 +7,8 @@ import "../styles/pages/JobsDetailPage.css"
 import { useEffect, useState } from "react";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
+import { useJobs } from "../hooks/useJobs";
+import { JobActionTypes } from "../reducers/SaveJobReducer";
 
 
 export const JobsDetailPage = () => {
@@ -18,6 +20,12 @@ export const JobsDetailPage = () => {
   const [loading, setLoading] = useState(false) // Loading state
 
   const [expanded, setExpanded] = useState(false) // Expander boolean för text 
+
+  const { dispatch } = useJobs();
+
+  const handleSaveJob = (job: JobAd) => {
+  dispatch({ type: JobActionTypes.ADDED, payload: job });
+};
 
   const shouldShow = (value: string | undefined | null): boolean => {
     return !!value && 
@@ -246,9 +254,15 @@ export const JobsDetailPage = () => {
                 </span>
               )}
               </p>
-            <AppButton
-            onClick={() => (handleClick)} children={"Ansök"}>
-            </AppButton>
+            <div className="button-wrapper">
+              <AppButton
+              onClick={() => (handleClick)} children={"Ansök"}>
+              </AppButton>
+            
+              <AppButton 
+              onClick={() => handleSaveJob(job)} children={"Spara"}>
+              </AppButton>
+            </div>
           </li>
         </DigiList>
       </section>

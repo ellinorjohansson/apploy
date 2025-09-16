@@ -1,12 +1,21 @@
 .body-wrapper {
     position: relative;
 }
+.first-container {
+    & .sc-digi-layout-container-h .digi-layout-container.sc-digi-layout-container {
+    padding: 0;
+    margin: 0;
+}
+}
 figure {
     position: static;
-    width: 100vw;
-    height: 900px;
+    min-width: 100vw;
+    min-height: 900px;
     overflow: hidden;
     margin: 0;
+    & .digi-media-image__image.sc-digi-media-image {
+    cursor: default;
+    }
 }
 .intro-wrapper {
     max-width: 500px;
@@ -34,17 +43,30 @@ figure {
     z-index: 2;
     left: 50%;                /* Flyttar elementets vänsterkant till mitten */
     transform: translateX(-50%);
-    bottom: 60px;
-}
-.sc-digi-icon-chevron-down-h svg.sc-digi-icon-chevron-down {
-    color: rgba(255, 166, 43, 0.7);
-    height: 80px;
+    top: 700px;
+    animation: bounce 2s infinite;
+    cursor: pointer; /* gör tydligare att det är klickbart */
+    & .sc-digi-icon-chevron-down-h svg.sc-digi-icon-chevron-down {
+    min-height: 80px;
+    color: var(--color-header-footer-bg);
+    }
 }
 
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-20px); /* hoppa uppåt */
+  }
+  60% {
+    transform: translateX(-50%) translateY(-10px); /* lite mindre studs tillbaka */
+  }
+}
 .sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
     background-color: #BDDFDA;
 }
-
 .chart-wrapper {
     padding: 100px 0;
 }

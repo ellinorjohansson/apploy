@@ -16,6 +16,7 @@ body {
   font-family: var(--digi--global--typography--font-family--default);
   background-color: var(--color-background);
   color: var(--color-text);
+  overflow-x: hidden;
 }
 
 html {

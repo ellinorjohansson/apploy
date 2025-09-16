@@ -9,16 +9,24 @@
     display: grid;
     grid-template-columns: repeat( 8, 1fr);
     grid-template-rows: 75px;
+    padding: 0 2rem;
+    max-width: 100%;
+    box-sizing: border-box;
 }
+
+
+
+
 .header-container :nth-child(1) {
     grid-column: 1 / 2 ;
     display: flex;
+
 }
 .header-container h1 {
     display: flex;
     align-items: end;
     font-size: 1.1rem;
-    grid-column: 2 / 5;
+    grid-column: 2 / 7;
     margin: 10px;
 }
 .header-container :nth-child(3) {
@@ -52,4 +60,37 @@
     --digi--header-navigation-item--color-hover: var(--color-header-footer-bg);
 
 ;
+}
+
+
+@media (max-width: 500px) { 
+    .header-container h1 { 
+       color: rgba(255, 255, 255, 0) !important; /*Ugly solution to hide the text on small screens*/
+        
+    }
+}
+
+@media (max-width: 700px) {
+    .header-container {
+        padding: 0 1rem;
+    }
+
+    .digi-media-image__image.sc-digi-media-image {
+        min-width: 150px;
+    }
+
+    .header-container h1 { 
+        font-size: 0.8rem !important;
+        
+    }
+    .sc-digi-icon-user-alt-h svg.sc-digi-icon-user-alt {
+        margin-left: 10px;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 2rem;
+    }
 }

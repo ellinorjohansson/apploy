@@ -1,6 +1,5 @@
 /* Global styles */
 #root {
-  max-width: 1280px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,6 +16,7 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   overflow-x: hidden; /* Prevent horizontal scrollbar */
+
 }
 
 html {

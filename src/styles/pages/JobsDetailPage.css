@@ -155,3 +155,15 @@ ul.digi-list__list.sc-digi-list :nth-child(5){
     align-items: center;
     gap: 25px;
 }
+
+.save-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.add-text {
+    margin-top: 10px;
+}

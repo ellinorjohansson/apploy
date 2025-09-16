@@ -14,8 +14,15 @@ import {
   LayoutColumnsElement,
   TypographyVariation,
 } from '@digi/arbetsformedlingen';
+import { useNavigate } from 'react-router-dom';
 
 export const UserPage = () => {
+  const navigate = useNavigate();
+
+  const handleGoToDetails = (jobId: string) => {
+    navigate(`/jobs/${jobId}`);
+  };
+
   // Retrieve jobs and dispatch function from custom hook
   const { jobs, dispatch } = useJobs();
 
@@ -60,13 +67,16 @@ export const UserPage = () => {
 
       <div>
         <AppButton onClick={() => handleRemoveJob(job.id)}>Ta bort</AppButton>
+        <AppButton onClick={() => handleGoToDetails(job.id)}>
+          Visa detaljer
+        </AppButton>
       </div>
     </DigiLayoutColumns>
   );
 
   return (
     // Wrapper for all saved and applied jobs
-    <div className='save-job-body'>
+    <div className="save-job-body">
       <DigiLayoutBlock
         afVariation={LayoutBlockVariation.TRANSPARENT}
         className="save-job-wrapper"

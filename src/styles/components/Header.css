@@ -1,7 +1,9 @@
 .header-wrapper {
     background-color: var( --color-header-footer-bg);
     color: var(--color-text);
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 .header-container {
     display: grid;

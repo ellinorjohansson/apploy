@@ -7,7 +7,9 @@ export const Footer = () => {
 
 
     const handleClick = () => {
-        console.log("Klickat")
+    }
+    const handleReturn = () => {
+        window.scrollTo({ top: 0, left: 0})
     }
     return (
         <div className="foot-wrapper">
@@ -82,7 +84,7 @@ export const Footer = () => {
                     </div>
                     <div>
                         <div className="button-wrapper">
-                            <AppButton onClick={handleClick} children={"Länk till något"}></AppButton>
+                            <AppButton onClick={handleReturn} children={"Till toppen"}></AppButton>
                             <AppButton onClick={handleClick} children={"Länk till något"}></AppButton>
                         </div>
                     </div>

@@ -9,10 +9,12 @@
 }
 figure {
     position: static;
-    min-width: 100vw;
+    min-width: 100%;
+    max-width: 100%;
     min-height: 900px;
     overflow: hidden;
     margin: 0;
+    box-sizing: border-box;
     & .digi-media-image__image.sc-digi-media-image {
     cursor: default;
     }

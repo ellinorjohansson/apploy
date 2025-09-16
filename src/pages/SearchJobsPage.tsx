@@ -7,8 +7,8 @@ import { fetchJobs, type FetchJobsResult } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
-import { DigiLayoutColumns, DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
-import { FormInputSearchVariation, FormInputType, LayoutColumnsElement, LayoutColumnsVariation } from "@digi/arbetsformedlingen";
+import { DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
+import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
 import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
 import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
 
@@ -59,7 +59,17 @@ export const SearchJobsPage = () => {
     const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
     const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
-   
+    
+    /**
+     * Smooth scroll to top of page
+     * Used when changing pages, filters, or clearing filters
+     */
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
     
 
     // Reset to page 1 when filters change
@@ -93,9 +103,17 @@ export const SearchJobsPage = () => {
         loadJobs();
     }, [currentPage, selectedBranches, selectedLocations, searchTerm]);
 
+    // Smooth scroll to top when filters change (but not for pagination)
+    useEffect(() => {
+        if (selectedBranches.length > 0 || selectedLocations.length > 0 || searchTerm.trim()) {
+            scrollToTop();
+        }
+    }, [selectedBranches, selectedLocations, searchTerm]);
+
     // Handle page change for pagination
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
+        scrollToTop();
     };
 
     /**
@@ -108,6 +126,9 @@ export const SearchJobsPage = () => {
         setSelectedBranches([]);
         setCurrentPage(1);
         setJobs([]);
+        
+        // Smooth scroll to top when clearing filters
+        scrollToTop();
         
         // Fetch fresh jobs without any filters
         setLoading(true);
@@ -134,55 +155,37 @@ export const SearchJobsPage = () => {
             <h3 className="search-subtitle">Hitta ditt nästa jobb bland tusentals möjligheter</h3>
            
             <div className="search-section">
+            <div className="search-bar-wrapper">
                 <div className="search-bar-container">
-                    {/* Main search input */}
-                    <DigiFormInputSearch
-                        afLabel="Sök jobb"
-                        afVariation={FormInputSearchVariation.LARGE}
-                        afType={FormInputType.SEARCH}
-                        afButtonText="Sök"
-                        onAfOnChange={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                            setSearchTerm(extractSearchValue(e));
-                        }}
-                        onAfOnSubmitSearch={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                            setSearchTerm(extractSearchValue(e));
-                        }}
-                    />
-                    <div className="filter-dropdowns">
-                        {/* Location filter dropdown */}
-                        <DigiFormFilter
-                            afFilterButtonText="Ort"
-                            afSubmitButtonText="Filtrera"
-                            afName="Välj ort"
-                            afListItems={SWEDISH_COUNTIES.map(county => ({
-                                id: county,
-                                label: county
-                            }))}
-                            onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                setSelectedLocations(extractCheckedItems(e));
-                            }}
-                            onAfResetFilter={() => {
-                                setSelectedLocations([]);
-                            }}
-                        />
-                        {/* Branch filter dropdown */}
-                        <DigiFormFilter
-                            afFilterButtonText="Bransch"
-                            afSubmitButtonText="Filtrera"
-                            afName="Välj bransch"
-                            afListItems={JOB_BRANCHES.map(branch => ({
-                                id: branch || '',
-                                label: branch || ''
-                            }))}
-                            onAfSubmitFilter={(e: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                                setSelectedBranches(extractCheckedItems(e));
-                            }}
-                            onAfResetFilter={() => {
-                                setSelectedBranches([]);
-                            }}
-                        />
-                    </div>
-                </div>
+  <DigiFormInputSearch
+    afLabel="Sök jobb"
+    afVariation={FormInputSearchVariation.MEDIUM}
+    afType={FormInputType.SEARCH}
+    afButtonText="Sök"
+     onAfOnChange={(e: any) => setSearchTerm(extractSearchValue(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+     onAfOnSubmitSearch={(e: any) => setSearchTerm(extractSearchValue(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+  />
+</div>
+  <div className="filter-dropdowns">
+    <DigiFormFilter
+      afFilterButtonText="Ort"
+      afSubmitButtonText="Filtrera"
+      afName="Välj ort"
+      afListItems={SWEDISH_COUNTIES.map(county => ({ id: county, label: county }))}
+       onAfSubmitFilter={(e: any) => setSelectedLocations(extractCheckedItems(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+       onAfResetFilter={() => setSelectedLocations([])}
+    />
+    <DigiFormFilter
+      afFilterButtonText="Bransch"
+      afSubmitButtonText="Filtrera"
+      afName="Välj bransch"
+      afListItems={JOB_BRANCHES.map(branch => ({ id: branch || '', label: branch || '' }))}
+       onAfSubmitFilter={(e: any) => setSelectedBranches(extractCheckedItems(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+       onAfResetFilter={() => setSelectedBranches([])}
+    />
+  </div>
+</div>
+
                 
                 {/* Display number of search results */}
                 <div className="search-results-info">
@@ -209,25 +212,26 @@ export const SearchJobsPage = () => {
             {loading && <div className="loading-indicator">Laddar fler jobb...</div>}
             
             {/* Job cards container - key prop forces re-render when page or results change */}
-            <DigiLayoutColumns
+            <div 
+                className="job-cards-container"
                 key={`page-${currentPage}-${filteredJobs.length}`}
-                afElement={LayoutColumnsElement.DIV}
-                afVariation={LayoutColumnsVariation.THREE}
             >
                 {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job}/>
                 ))}
-            </DigiLayoutColumns>
+            </div>
             
             {/* Pagination */}
-            <DigiNavigationPagination
-                afTotalPages={totalPages}
-                afInitActivePage={currentPage}
-                onAfOnPageChange={(event: CustomEvent<number>) => {
-                    const newPage = event.detail;
-                    handlePageChange(newPage);
-                }}
-            />
+            <div className="pagination-wrapper">
+                <DigiNavigationPagination
+                    afTotalPages={totalPages}
+                    afInitActivePage={currentPage}
+                    onAfOnPageChange={(event: CustomEvent<number>) => {
+                        const newPage = event.detail;
+                        handlePageChange(newPage);
+                    }}
+                />
+            </div>
         </div>
     )
 }

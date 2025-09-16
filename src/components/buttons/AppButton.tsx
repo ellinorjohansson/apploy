@@ -1,16 +1,28 @@
-// components/AppButton.tsx
+// AppButton.tsx
+// Wrapper component for DigiButton from Arbetsförmedlingen design system
+// Provides consistent styling and behavior across the application
 
 import { DigiButton } from "@digi/arbetsformedlingen-react";
 import { ButtonSize, ButtonVariation } from "@digi/arbetsformedlingen";
 
 interface AppButtonProps {
   onClick: () => void;
-  children: React.ReactNode; // Says the component can recieve anything inside the tag
-  variant?: 'primary' | 'secondary'; // Optional variant prop
-  disabled?: boolean; // Optional disabled prop
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
 }
 
+/**
+ * Custom button component that wraps DigiButton
+ * @param onClick - Function to call when button is clicked
+ * @param children - Content to display inside the button
+ * @param variant - Button style variant (primary or secondary)
+ * @param disabled - Whether the button is disabled
+ */
 export const AppButton = ({ onClick, children, variant = 'primary', disabled = false }: AppButtonProps) => {
+  /**
+   * Handles button click, only executes if button is not disabled
+   */
   const handleClick = () => {
     if (!disabled) {
       onClick();

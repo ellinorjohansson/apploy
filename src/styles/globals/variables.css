@@ -13,13 +13,15 @@
   /* Titel / buttons / ikoner */
   --color-header-footer-bg: #035548;
   /* Header + footer background */
+  --color-header-footer-bg-hover: #02463a;
+  /* Header + footer background */
 
   /* Overriding of AF colors */
   --digi--color--background--inverted-1: var(--color-primary);
   --digi--color--background--inverted-2: var(--color-text);
   --digi--color--background--inverted-3: var(--color-primary);
   --digi--color--background--inverted-4: var(--color-header-footer-bg);
-  --digi--color--background--inverted-6: var(--color-header-footer-bg); /*Hover*/
+  --digi--color--background--inverted-6: var(--color-header-footer-bg-hover); /*Hover*/
 
   /* Overriding of AF fonts */
   --digi--global--typography--font-family--default: "Poppins", sans-serif;

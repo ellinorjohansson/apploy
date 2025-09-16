@@ -5,9 +5,11 @@
 }
 
 .save-job-body {
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
     & .sc-digi-layout-block-h {
     width: 100%;
     display: flex;

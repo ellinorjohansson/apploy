@@ -4,7 +4,7 @@ import { DigiMediaImage, DigiTypography } from "@digi/arbetsformedlingen-react";
 import { TypographyVariation } from "@digi/arbetsformedlingen";
 import { AppButton } from "../components/buttons/AppButton";
 import { useNavigate } from "react-router-dom";
-import "../components/css/Error.css"
+import "../styles/pages/ErrorPage.css"
 
 export const ErrorPage = () => {
 

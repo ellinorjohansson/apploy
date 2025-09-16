@@ -215,7 +215,7 @@ export const SearchJobsPage = () => {
                 afVariation={LayoutColumnsVariation.THREE}
             >
                 {filteredJobs.map((job) => (
-                    <JobCard key={job.id} job={job} />
+                    <JobCard key={job.id} job={job}/>
                 ))}
             </DigiLayoutColumns>
             

@@ -3,6 +3,7 @@
 import type { JobAd } from "../types/jobs";
 import { DigiLayoutBlock, DigiTypography, DigiLinkInternal } from "@digi/arbetsformedlingen-react";
 import { LayoutBlockVariation } from "@digi/arbetsformedlingen";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,6 +17,10 @@ export const JobCard = ({ job }: JobCardProps) => {
     const employer = job.employer?.name || job.employer?.workplace || "Okänd arbetsgivare";
     const working_hours_type = job.working_hours_type?.label || "Omfattning ej angiven";
 
+    
+    // Variable for navigaton
+    const navigate = useNavigate()
+
     // Check in the free text if the job is a remote/hybrid job
     // FUNKAR INTE
     const workMode = job.freetext_concepts?.find(
@@ -24,11 +29,17 @@ export const JobCard = ({ job }: JobCardProps) => {
             c.label?.toLowerCase().includes("hybrid")
     )?.label;
 
+    const handleClick = (jobId: string) => {
+        navigate(`/jobs/${jobId}`)
+    }
     return (
         <div className="block-wrapper"> 
         <DigiLayoutBlock 
             className="job-card"
-            afVariation={LayoutBlockVariation.PRIMARY}
+            afHeading={job.headline}
+            afHeadingLevel={InfoCardMultiHeadingLevel.H3}
+            afType={InfoCardMultiType.RELATED}
+            onClick={() => handleClick(job.id)} // Addera pointer, hover-effect senare
         >
             <DigiTypography>
                 <h2>{job.headline}</h2>

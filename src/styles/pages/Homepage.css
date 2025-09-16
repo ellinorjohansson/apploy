@@ -1,0 +1,105 @@
+.body-wrapper {
+    position: relative;
+}
+.first-container {
+    & .sc-digi-layout-container-h .digi-layout-container.sc-digi-layout-container {
+    padding: 0;
+    margin: 0;
+}
+}
+figure {
+    position: static;
+    min-width: 100vw;
+    min-height: 900px;
+    overflow: hidden;
+    margin: 0;
+    & .digi-media-image__image.sc-digi-media-image {
+    cursor: default;
+    }
+}
+.intro-wrapper {
+    max-width: 500px;
+    height: 300px;
+    position: absolute;
+    top: 150px;
+    left: 10%;
+    z-index: 1;
+    background-color: rgb(237, 231, 227, 0.7);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.hero-container {
+    height: 600px; /* Viktigt för att positioneringen ska ske inom bilden */
+}
+
+.chevron-container {
+    position: absolute;   /* Hur långt från botten ikonen ska vara när man scrollar */
+    z-index: 2;
+    left: 50%;                /* Flyttar elementets vänsterkant till mitten */
+    transform: translateX(-50%);
+    top: 700px;
+    animation: bounce 2s infinite;
+    cursor: pointer; /* gör tydligare att det är klickbart */
+    & .sc-digi-icon-chevron-down-h svg.sc-digi-icon-chevron-down {
+    min-height: 80px;
+    color: var(--color-header-footer-bg);
+    }
+}
+
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-20px); /* hoppa uppåt */
+  }
+  60% {
+    transform: translateX(-50%) translateY(-10px); /* lite mindre studs tillbaka */
+  }
+}
+.sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
+    background-color: #BDDFDA;
+}
+.chart-wrapper {
+    padding: 100px 0;
+}
+
+.chart-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 35vw;
+    border-right: 2px solid black;
+    padding-right: 20px;
+}
+
+svg text:hover {
+  fill: #035548;
+}
+
+.bar {
+  fill: #035548;
+}
+
+.sc-digi-button-h .digi-button--variation-function.sc-digi-button {
+    color: #333436;
+}
+
+.sc-digi-button-h .digi-button--variation-function.sc-digi-button:hover {
+    color: #035548; 
+}
+
+.sc-digi-icon-table-h svg.sc-digi-icon-table {
+    color: #333436;
+}
+
+.sc-digi-icon-chart-h svg.sc-digi-icon-chart {
+    color: #333436;
+}

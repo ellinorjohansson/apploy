@@ -1,6 +1,7 @@
 .header-wrapper {
-    background-color: #035548;
-    color: white;
+    background-color: var( --color-header-footer-bg);
+    color: var(--color-text);
+    width: 100vw;
 }
 .header-container {
     display: grid;
@@ -33,9 +34,20 @@
 }
 
 .sc-digi-header-navigation {
-    background-color: white;
+    background-color: var(--color-text);
     
 }
 .digi-header-navigation-item-indicator.sc-digi-header-navigation-item {
-    background-color: #035548; 
+    background-color: var( --color-header-footer-bg);
+}
+.sc-digi-icon-globe-h svg.sc-digi-icon-globe {
+    color: var(--color-primary) 
+}
+.sc-digi-icon-user-alt-h svg.sc-digi-icon-user-alt {
+    color: var(--color-primary) 
+}
+.sc-digi-header-navigation-item-h {
+    --digi--header-navigation-item--color-hover: var(--color-header-footer-bg);
+
+;
 }

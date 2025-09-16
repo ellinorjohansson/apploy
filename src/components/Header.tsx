@@ -1,5 +1,5 @@
 import { /*DigiHeader, DigiHeaderAvatar, */ DigiHeaderNavigation, DigiHeaderNavigationItem, DigiIconGlobe, DigiIconUserAlt, DigiMediaImage } from "@digi/arbetsformedlingen-react"
-import "./css/Header.css"
+import "../styles/components/Header.css"
 import { Link, useNavigate } from "react-router-dom"
 export const Header = () => {
 

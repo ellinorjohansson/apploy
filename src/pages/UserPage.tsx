@@ -1,7 +1,7 @@
 import { useJobs } from '../hooks/useJobs';
 import { JobActionTypes } from '../reducers/SaveJobReducer';
 import { AppButton } from '../components/buttons/AppButton';
-import '../styles/saveJob.css';
+import '../styles/pages/saveJob.css';
 import {
   DigiFormCheckbox,
   DigiLayoutBlock,
@@ -66,37 +66,39 @@ export const UserPage = () => {
 
   return (
     // Wrapper for all saved and applied jobs
-    <DigiLayoutBlock
-      afVariation={LayoutBlockVariation.TRANSPARENT}
-      className="save-job-wrapper"
-    >
-      <section>
-        <DigiTypography afVariation={TypographyVariation.SMALL}>
-          <h2 className="saved-title">Sparade jobb</h2>
-        </DigiTypography>
-
-        {savedJobs.length === 0 ? (
+    <div className='save-job-body'>
+      <DigiLayoutBlock
+        afVariation={LayoutBlockVariation.TRANSPARENT}
+        className="save-job-wrapper"
+      >
+        <section>
           <DigiTypography afVariation={TypographyVariation.SMALL}>
-            <p>Inga sparade jobb än.</p>
+            <h2 className="saved-title">Sparade jobb</h2>
           </DigiTypography>
-        ) : (
-          savedJobs.map((job) => renderJob(job, 'saved'))
-        )}
-      </section>
 
-      <section className="applied-section">
-        <DigiTypography afVariation={TypographyVariation.SMALL}>
-          <h2 className="applied-title">Sökta jobb</h2>
-        </DigiTypography>
+          {savedJobs.length === 0 ? (
+            <DigiTypography afVariation={TypographyVariation.SMALL}>
+              <p>Inga sparade jobb än.</p>
+            </DigiTypography>
+          ) : (
+            savedJobs.map((job) => renderJob(job, 'saved'))
+          )}
+        </section>
 
-        {appliedJobs.length === 0 ? (
+        <section className="applied-section">
           <DigiTypography afVariation={TypographyVariation.SMALL}>
-            <p>Inga sökta jobb än.</p>
+            <h2 className="applied-title">Sökta jobb</h2>
           </DigiTypography>
-        ) : (
-          appliedJobs.map((job) => renderJob(job, 'applied'))
-        )}
-      </section>
-    </DigiLayoutBlock>
+
+          {appliedJobs.length === 0 ? (
+            <DigiTypography afVariation={TypographyVariation.SMALL}>
+              <p>Inga sökta jobb än.</p>
+            </DigiTypography>
+          ) : (
+            appliedJobs.map((job) => renderJob(job, 'applied'))
+          )}
+        </section>
+      </DigiLayoutBlock>
+    </div>
   );
 };

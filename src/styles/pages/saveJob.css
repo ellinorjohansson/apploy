@@ -4,6 +4,22 @@
     --digi--form-checkbox--background-color--secondary: #FFC108;
 }
 
+.save-job-body {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    & .sc-digi-layout-block-h {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px;
+    padding: 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    }
+}
+
 .save-job-wrapper {
     display: flex;
     flex-direction: column;

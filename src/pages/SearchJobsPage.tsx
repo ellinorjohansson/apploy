@@ -7,8 +7,8 @@ import { fetchJobs, type FetchJobsResult } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
-import { DigiInfoCardMultiContainer, DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
-import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
+import { DigiLayoutColumns, DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
+import { FormInputSearchVariation, FormInputType, LayoutColumnsElement, LayoutColumnsVariation } from "@digi/arbetsformedlingen";
 import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
 import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
 
@@ -209,11 +209,15 @@ export const SearchJobsPage = () => {
             {loading && <div className="loading-indicator">Laddar fler jobb...</div>}
             
             {/* Job cards container - key prop forces re-render when page or results change */}
-            <DigiInfoCardMultiContainer key={`page-${currentPage}-${filteredJobs.length}`}>
+            <DigiLayoutColumns
+                key={`page-${currentPage}-${filteredJobs.length}`}
+                afElement={LayoutColumnsElement.DIV}
+                afVariation={LayoutColumnsVariation.THREE}
+            >
                 {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                 ))}
-            </DigiInfoCardMultiContainer>
+            </DigiLayoutColumns>
             
             {/* Pagination */}
             <DigiNavigationPagination

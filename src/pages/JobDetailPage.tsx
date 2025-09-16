@@ -36,6 +36,8 @@ export const JobsDetailPage = () => {
   const [saved, setSaved] = useState(false);
 
   const handleSaveJob = (job: JobAd) => {
+    console.log('Saving job:', job);
+
     dispatch({ type: JobActionTypes.ADDED, payload: job });
     setSaved(true);
   };
@@ -286,19 +288,17 @@ export const JobsDetailPage = () => {
                   onClick={() => handleClick}
                   children={'Ansök'}
                 ></AppButton>
-
-                <AppButton onClick={() => job && handleSaveJob(job)}>
-                  Spara
-                </AppButton>
-
-                <DigiTypography afVariation={TypographyVariation.SMALL}>
-                  {saved && <p>Tillagd i sparade jobb</p>}
-                </DigiTypography>
               </div>
             </li>
           </DigiList>
         </section>
       )}
+      <div className='save-button'>
+        <AppButton onClick={() => job && handleSaveJob(job)}>Spara</AppButton>
+        <DigiTypography afVariation={TypographyVariation.SMALL}>
+          {saved && <p className='add-text'>Tillagd i sparade jobb</p>}
+        </DigiTypography>
+      </div>
     </section>
   );
 };

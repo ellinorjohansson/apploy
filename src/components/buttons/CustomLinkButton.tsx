@@ -11,6 +11,7 @@ interface CustomLinkButtonProps {
   children: React.ReactNode;
   afSize?: LinkButtonSize;
   afVariation?: LinkButtonVariation;
+  afHideIcon?: boolean;
   onClick?: () => void;
   className?: string;
 }
@@ -30,6 +31,7 @@ export const CustomLinkButton = ({
   children, 
   afSize = LinkButtonSize.MEDIUM,
   afVariation = LinkButtonVariation.PRIMARY,
+  afHideIcon = true,
   onClick,
   className = ""
 }: CustomLinkButtonProps) => {
@@ -38,6 +40,7 @@ export const CustomLinkButton = ({
       afHref={afHref}
       afSize={afSize}
       afVariation={afVariation}
+      af-hide-icon={afHideIcon}
       onClick={onClick}
       className={`custom-link-button ${className}`}
     >

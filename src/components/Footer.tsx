@@ -1,13 +1,12 @@
 import { FooterVariation, FooterCardVariation} from "@digi/arbetsformedlingen"
 import { DigiFooter, DigiFooterCard, DigiIconAccessibilityUniversal, DigiIconSign, DigiIconGlobe, DigiIconEnvelope } from "@digi/arbetsformedlingen-react"
 import "../styles/components/Footer.css"
-import { AppButton } from "./buttons/AppButton"
+import { CustomLinkButton } from "./buttons/CustomLinkButton"
 
 export const Footer = () => {
 
 
-    const handleClick = () => {
-    }
+ 
     const handleReturn = () => {
         window.scrollTo({ top: 0, left: 0})
     }
@@ -84,8 +83,9 @@ export const Footer = () => {
                     </div>
                     <div>
                         <div className="button-wrapper">
-                            <AppButton onClick={handleReturn} children={"Till toppen"}></AppButton>
-                            <AppButton onClick={handleClick} children={"Länk till något"}></AppButton>
+                            <CustomLinkButton afHref="#" onClick={handleReturn}>
+                                Till toppen
+                            </CustomLinkButton>
                         </div>
                     </div>
                 </div>

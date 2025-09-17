@@ -46,6 +46,7 @@ export const HomePage = () => {
               </DigiLayoutContainer>
               <CustomLinkButton
                 afHref="#"
+                afHideIcon={false}
                 onClick={handleClick}
                 className="intro-link-button"
               >

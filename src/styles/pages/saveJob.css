@@ -10,6 +10,7 @@
     box-sizing: border-box;
     & .sc-digi-layout-block-h {
     width: 100%;
+    }
 }
 
 .save-job-body .sc-digi-layout-block-h {

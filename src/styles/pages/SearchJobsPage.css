@@ -83,8 +83,7 @@
   -webkit-line-clamp: 6;
   line-clamp: 6;               
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  word-break: break-word;   
+  overflow: hidden; 
   text-overflow: ellipsis;
 }
 .job-card-wrapper {

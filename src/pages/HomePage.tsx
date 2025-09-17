@@ -13,8 +13,8 @@ import {
   DigiIconChevronDown,
 } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
 import { useNavigate } from 'react-router-dom';
-import { AppButton } from '../components/buttons/AppButton';
 import { Chart } from '../components/Chart';
+import { CustomLinkButton } from '../components/buttons/CustomLinkButton';
 
 import '../styles/pages/Homepage.css';
 import { DigiLayoutColumns } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
@@ -44,10 +44,13 @@ export const HomePage = () => {
                   karriären finns möjligheten här. Din framtid börjar idag!
                 </p>
               </DigiLayoutContainer>
-              <AppButton
+              <CustomLinkButton
+                afHref="#"
                 onClick={handleClick}
-                children={'Hitta nu'}
-              ></AppButton>
+                className="intro-link-button"
+              >
+                Hitta nu
+              </CustomLinkButton>
             </div>
             <figure className="hero-container">
               <DigiMediaImage

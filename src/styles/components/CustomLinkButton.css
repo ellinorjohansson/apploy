@@ -1,0 +1,20 @@
+/* CustomLinkButton.css */
+/* Global styling for custom link buttons with yellow/green color scheme */
+
+/* CSS Custom Properties för designsystemet */
+.custom-link-button {
+    --digi--color--background--primary: var(--color-primary);
+    --digi--color--text--primary: var(--color-header-footer-bg);
+    --digi--color--background--primary--hover: var(--color-header-footer-bg);
+    --digi--color--text--primary--hover: var(--color-primary);
+}
+
+
+/* Alla text-element */
+.custom-link-button * {
+    color: var(--color-header-footer-bg);
+}
+
+.custom-link-button:hover * {
+    color: white;
+}

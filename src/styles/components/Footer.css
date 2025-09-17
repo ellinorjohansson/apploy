@@ -1,11 +1,12 @@
 .foot-wrapper {
     & .sc-digi-layout-block-h {
-    --digi--layout-block--background--profile: var(--color-header-footer-bg);
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+        --digi--layout-block--background--profile: var(--color-header-footer-bg);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
+
 .foot-container {
     display: flex;
     justify-content: space-between;
@@ -16,57 +17,80 @@
     display: flex;
     justify-content: space-around;
 }
+
+.sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s a {
+    color: var(--color-primary);
+}
+
 .second-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+
     & .sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s a {
         display: flex;
         justify-content: center;
     }
 }
+
+.sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s p {
+    color: var(--color-primary);
+
+}
+
 .button-wrapper {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 1rem;                
-    height: 100%;  
+    gap: 1rem;
+    height: 100%;
 }
+
 .sc-digi-button-h .digi-button--variation-primary.sc-digi-button {
     color: var(--color-header-footer-bg);
 }
+
 .sc-digi-icon-arrow-up-h svg.sc-digi-icon-arrow-up {
     color: var(--color-header-footer-bg);
 }
+
 .sc-digi-icon-arrow-right-h svg.sc-digi-icon-arrow-right {
     color: var(--color-header-footer-bg);
 }
+
 address {
-    color: var(--color-text);
+    color: var(--color-primary);
+
     & .sc-digi-layout-container {
         & .sc-digi-layout-block {
             & .sc-digi-icon-envelope {
                 color: var(--color-primary);
             }
         }
+    }
 }
-}
+
 address ul {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 5rem;
 }
+
 address ul li {
     list-style: none;
 }
+
 address ul li a {
-    color: var(--color-text);
+    color: var(--color-primary);
     text-decoration: none;
 }
+
 address ul li p {
     text-align: start;
 }
+
 address ul li div {
     display: flex;
     gap: 10px;
@@ -74,4 +98,24 @@ address ul li div {
 
 .sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s a svg {
     color: var(--color-primary)
+}
+
+.sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right], .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] p, .sc-digi-footer-h .sc-digi-footer-s > [slot^=content-bottom-right] p, .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right], .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] span, .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] span, .sc-digi-footer-h .sc-digi-footer-s > [slot^=content-bottom-right] span, .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right], .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] a, .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] a, .sc-digi-footer-h.sc-digi-footer-s > [slot^=content-bottom-right] a, .sc-digi-footer-h .sc-digi-footer-s > [slot^=content-bottom-right] a {
+    color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .foot-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .first-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    address ul li {
+        margin-bottom: 10px;
+    }
 }

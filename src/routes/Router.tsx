@@ -1,3 +1,5 @@
+// Router.tsx
+
 import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../pages/Layout";
 import { HomePage } from "../pages/HomePage";
@@ -25,11 +27,11 @@ export const router = createBrowserRouter([
         element: <JobsDetailPage />,
       },
       {
-        path: "/user",
+        path: "/user", // Saved jobs
         element: <UserPage />,
       },
       {
-        path: "/404",
+        path: "/404", // Error page 404
         element: <ErrorPage />,
       },
     ],

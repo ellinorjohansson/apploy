@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppButton } from '../components/buttons/AppButton';
 import { Chart } from '../components/Chart';
 
-import '../styles/pages/Homepage.css'
+import '../styles/pages/Homepage.css';
 import { DigiLayoutColumns } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
 import { DigiTypography } from '@digi/arbetsformedlingen-react/src/lib/stencil-generated/components';
 
@@ -44,7 +44,10 @@ export const HomePage = () => {
                   karriären finns möjligheten här. Din framtid börjar idag!
                 </p>
               </DigiLayoutContainer>
-              <AppButton onClick={handleClick} children={'Hitta nu'}></AppButton>
+              <AppButton
+                onClick={handleClick}
+                children={'Hitta nu'}
+              ></AppButton>
             </div>
             <figure className="hero-container">
               <DigiMediaImage
@@ -59,13 +62,14 @@ export const HomePage = () => {
             </figure>
           </DigiLayoutBlock>
         </div>
-        <div id="chart-container" className='chart-wrapper'>
+        <div id="chart-container" className="chart-wrapper">
           <DigiLayoutBlock>
             <DigiLayoutColumns
               afElement={LayoutColumnsElement.DIV}
               afVariation={LayoutColumnsVariation.TWO}
+              className="chart-columns"
             >
-              <div className='chart-text'>
+              <div className="chart-text">
                 <DigiTypography afVariation={TypographyVariation.SMALL}>
                   <h2>Dagens jobb per region</h2>
                   <p>
@@ -76,7 +80,7 @@ export const HomePage = () => {
                   </p>
                 </DigiTypography>
               </div>
-              <div className='chart-wrapper'>
+              <div className="chart-wrapper chart">
                 <Chart></Chart>
               </div>
             </DigiLayoutColumns>

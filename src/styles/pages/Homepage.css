@@ -1,12 +1,14 @@
 .body-wrapper {
     position: relative;
 }
+
 .first-container {
     & .sc-digi-layout-container-h .digi-layout-container.sc-digi-layout-container {
-    padding: 0;
-    margin: 0;
+        padding: 0;
+        margin: 0;
+    }
 }
-}
+
 figure {
     position: static;
     min-width: 100%;
@@ -15,10 +17,12 @@ figure {
     overflow: hidden;
     margin: 0;
     box-sizing: border-box;
+
     & .digi-media-image__image.sc-digi-media-image {
-    cursor: default;
+        cursor: default;
     }
 }
+
 .intro-wrapper {
     max-width: 500px;
     height: 300px;
@@ -36,39 +40,56 @@ figure {
     padding: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 .hero-container {
-    height: 600px; /* Viktigt för att positioneringen ska ske inom bilden */
+    height: 600px;
+    /* Viktigt för att positioneringen ska ske inom bilden */
 }
 
 .chevron-container {
-    position: absolute;   /* Hur långt från botten ikonen ska vara när man scrollar */
+    position: absolute;
+    /* Hur långt från botten ikonen ska vara när man scrollar */
     z-index: 2;
-    left: 50%;                /* Flyttar elementets vänsterkant till mitten */
+    left: 50%;
+    /* Flyttar elementets vänsterkant till mitten */
     transform: translateX(-50%);
     top: 700px;
     animation: bounce 2s infinite;
-    cursor: pointer; /* gör tydligare att det är klickbart */
+    cursor: pointer;
+
+    /* gör tydligare att det är klickbart */
     & .sc-digi-icon-chevron-down-h svg.sc-digi-icon-chevron-down {
-    min-height: 80px;
-    color: var(--color-header-footer-bg);
+        min-height: 80px;
+        color: var(--color-header-footer-bg);
     }
 }
 
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  40% {
-    transform: translateX(-50%) translateY(-20px); /* hoppa uppåt */
-  }
-  60% {
-    transform: translateX(-50%) translateY(-10px); /* lite mindre studs tillbaka */
-  }
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    40% {
+        transform: translateX(-50%) translateY(-20px);
+        /* hoppa uppåt */
+    }
+
+    60% {
+        transform: translateX(-50%) translateY(-10px);
+        /* lite mindre studs tillbaka */
+    }
 }
+
 .sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
     background-color: #BDDFDA;
 }
+
 .chart-wrapper {
     padding: 100px 0;
 }
@@ -83,11 +104,11 @@ figure {
 }
 
 svg text:hover {
-  fill: #035548;
+    fill: #035548;
 }
 
 .bar {
-  fill: #035548;
+    fill: #035548;
 }
 
 .sc-digi-button-h .digi-button--variation-function.sc-digi-button {
@@ -95,7 +116,7 @@ svg text:hover {
 }
 
 .sc-digi-button-h .digi-button--variation-function.sc-digi-button:hover {
-    color: #035548; 
+    color: #035548;
 }
 
 .sc-digi-icon-table-h svg.sc-digi-icon-table {

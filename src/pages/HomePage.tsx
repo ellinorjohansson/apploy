@@ -63,7 +63,7 @@ export const HomePage = () => {
           </DigiLayoutBlock>
         </div>
         <div id="chart-container" className="chart-wrapper">
-          <DigiLayoutBlock>
+          <DigiLayoutBlock afVariation={LayoutBlockVariation.TRANSPARENT}>
             <DigiLayoutColumns
               afElement={LayoutColumnsElement.DIV}
               afVariation={LayoutColumnsVariation.TWO}

@@ -29,7 +29,7 @@ export const Chart = () => {
     },
     x: "Antal jobb",
     y: "Regioner",
-    title: "Dagens jobb per region",
+    title: "",
   });
 
   const [loading, setLoading] = useState(true); 
@@ -56,7 +56,7 @@ export const Chart = () => {
         },
         x: "Antal jobb",
         y: "Regioner",
-        title: "Dagens jobb per region",
+        title: "",
       });
       setLoading(false);
     };
@@ -69,7 +69,7 @@ export const Chart = () => {
   }
 
   return (
-    <div style={{ height: "400px", width: "600px" }}>
+    <div className="chart-container">
       <DigiBarChart
         afVariation={BarChartVariation.Horizontal}
         afChartData={chartData}

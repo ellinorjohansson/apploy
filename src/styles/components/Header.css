@@ -83,7 +83,6 @@
 @media (max-width: 500px) {
     .header-container h1 {
         color: rgba(255, 255, 255, 0) !important;
-        /*Ugly solution to hide the text on small screens*/
     }
 }
 

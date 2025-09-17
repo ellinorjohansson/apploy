@@ -1,3 +1,5 @@
+// SaveJobReducer.ts
+
 import type { JobAd } from "../types/jobs";
 import { saveJobToLocalStorage } from "../helpers/ls";
 

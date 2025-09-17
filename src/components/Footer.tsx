@@ -1,3 +1,5 @@
+// Footer.tsx
+
 import { FooterVariation, FooterCardVariation } from '@digi/arbetsformedlingen';
 import {
   DigiFooter,
@@ -16,12 +18,16 @@ import { useNavigate } from 'react-router-dom';
 export const Footer = () => {
   const navigate = useNavigate();
 
+  // Send user to jobs page
   const handleClick = () => {
     navigate('/jobs');
   };
+
+  // Send user to the top of page
   const handleReturn = () => {
     window.scrollTo({ top: 0, left: 0 });
   };
+
   return (
     <div className="foot-wrapper">
       <DigiFooter afVariation={FooterVariation.SMALL}>

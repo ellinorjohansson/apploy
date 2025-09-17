@@ -1,3 +1,5 @@
+// chartService.ts
+
 import axios from 'axios';
 import type { JobAd } from "../types/jobs";
 

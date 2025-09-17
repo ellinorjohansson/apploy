@@ -1,5 +1,5 @@
 .sc-digi-form-checkbox-h {
-    --digi--form-checkbox--background-color--secondary: #FFC108;
+    --digi--form-checkbox--background-color--secondary: var(--color-primary);
 }
 
 .save-job-body {
@@ -27,7 +27,7 @@
     flex-direction: column;
     gap: 32px;
     padding: 32px;
-    background-color: #BDDFDA;
+    background-color: var(--color-background);
     width: 100%;
     max-width: 900px; /* centrerad och begränsad bredd */
     box-sizing: border-box;
@@ -65,12 +65,12 @@
 }
 
 .saved {
-    background-color: #EDE7E3;
+    background-color: var(--color-text);
 }
 
 .applied {
     opacity: 65%;
-    background-color: #EDE7E3;
+    background-color: var(--color-text);
 }
 
 .saved-title,

@@ -34,6 +34,25 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
+/* Left-align checkboxes and labels in filter dropdowns */
+.filter-dropdowns .sc-digi-form-filter-h .digi-form-filter__list {
+  text-align: left;
+}
+
+.filter-dropdowns .sc-digi-form-filter-h .digi-form-filter__list-item {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.filter-dropdowns .sc-digi-form-filter-h .digi-form-checkbox-h {
+  text-align: left;
+}
+
+.filter-dropdowns .sc-digi-form-filter-h .digi-form-checkbox-h label {
+  text-align: left;
+  justify-content: flex-start;
+}
 .search-results-info {
   font-size: 0.9rem;
 }
@@ -46,7 +65,7 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-  padding: 0.4rem;
+  padding: 10px;
 }
 .filter-section p {
   text-align: left;

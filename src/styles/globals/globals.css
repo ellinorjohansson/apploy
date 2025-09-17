@@ -23,3 +23,12 @@ html {
   scroll-behavior: smooth; /* Mjuk scrollning på hela sidan */
   overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
+
+/* Secondary button styles - following the same pattern as primary button */
+.sc-digi-button-h .digi-button--variation-secondary.sc-digi-button {
+    color: var(--color-header-footer-bg) !important;
+}
+
+.sc-digi-button-h .digi-button--variation-secondary.sc-digi-button:hover {
+    color: var(--color-header-footer-bg) !important;
+}

@@ -32,6 +32,15 @@
     gap: 1rem;                
     height: 100%;  
 }
+.sc-digi-button-h .digi-button--variation-primary.sc-digi-button {
+    color: var(--color-header-footer-bg);
+}
+.sc-digi-icon-arrow-up-h svg.sc-digi-icon-arrow-up {
+    color: var(--color-header-footer-bg);
+}
+.sc-digi-icon-arrow-right-h svg.sc-digi-icon-arrow-right {
+    color: var(--color-header-footer-bg);
+}
 address {
     color: var(--color-text);
     & .sc-digi-layout-container {

@@ -43,21 +43,19 @@ figure {
 
 .hero-container {
     height: 600px;
-    /* Viktigt för att positioneringen ska ske inom bilden */
+    /* Important for position of text on image */
 }
 
 .chevron-container {
     position: absolute;
-    /* Hur långt från botten ikonen ska vara när man scrollar */
     z-index: 2;
     left: 50%;
-    /* Flyttar elementets vänsterkant till mitten */
     transform: translateX(-50%);
     top: 700px;
     animation: bounce 2s infinite;
     cursor: pointer;
 
-    /* gör tydligare att det är klickbart */
+    /* Make it more visible that it's clickble */
     & .sc-digi-icon-chevron-down-h svg.sc-digi-icon-chevron-down {
         min-height: 80px;
         color: var(--color-header-footer-bg);
@@ -77,17 +75,17 @@ figure {
 
     40% {
         transform: translateX(-50%) translateY(-20px);
-        /* hoppa uppåt */
+        /* jump up */
     }
 
     60% {
         transform: translateX(-50%) translateY(-10px);
-        /* lite mindre studs tillbaka */
+        /* jump back */
     }
 }
 
 .sc-digi-layout-block-h .digi-layout-block--primary.sc-digi-layout-block {
-    background-color: #BDDFDA;
+    background-color: var(--color-background);
 }
 
 .chart-wrapper {
@@ -104,11 +102,11 @@ figure {
 }
 
 svg text:hover {
-    fill: #035548;
+    fill: var(--color-header-footer-bg);
 }
 
 .bar {
-    fill: #035548;
+    fill: var(--color-header-footer-bg);
 }
 
 .sc-digi-button-h .digi-button--variation-function.sc-digi-button {
@@ -116,7 +114,7 @@ svg text:hover {
 }
 
 .sc-digi-button-h .digi-button--variation-function.sc-digi-button:hover {
-    color: #035548;
+    color: var(--color-header-footer-bg);
 }
 
 .sc-digi-icon-table-h svg.sc-digi-icon-table {

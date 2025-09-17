@@ -14,7 +14,7 @@ import {
   ListType,
   TypographyVariation,
 } from '@digi/arbetsformedlingen';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/pages/JobsDetailPage.css';
 import { useEffect, useState } from 'react';
 import type { JobAd } from '../types/jobs';
@@ -24,6 +24,7 @@ import { JobActionTypes } from '../reducers/SaveJobReducer';
 
 export const JobsDetailPage = () => {
   const { jobId } = useParams(); // Hämtar jobId från URL
+  const navigate = useNavigate(); // For navigation
 
   const [job, setJob] = useState<JobAd | null>(null); // State för enskilt jobb
 
@@ -108,19 +109,33 @@ export const JobsDetailPage = () => {
         const response = await fetch(
           `https://jobsearch.api.jobtechdev.se/ad/${jobId}`
         );
-        if (!response.ok) throw new Error('Something failed in the fetch'); // ändra detta senare
+        if (!response.ok) {
+          if (response.status === 404) {
+            // Job not found, redirect to 404 page
+            navigate('/404');
+            return;
+          }
+          throw new Error('Something failed in the fetch');
+        }
         const data: JobAd = await response.json();
         console.log('API Response:', data);
         setJob(data);
       } catch (error) {
         console.error(error);
+        // If there's any other error, also redirect to 404
+        navigate('/404');
       } finally {
         setLoading(false);
       }
     };
 
-    getJob();
-  }, [jobId]);
+    if (jobId) {
+      getJob();
+    } else {
+      // No jobId provided, redirect to 404
+      navigate('/404');
+    }
+  }, [jobId, navigate]);
 
   return (
     <section className="body-wrapper">

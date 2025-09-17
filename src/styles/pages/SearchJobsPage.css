@@ -170,7 +170,11 @@
 }
 @media (max-width: 530px) {
   .search-page {
-    padding: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .job-card-wrapper{
+    padding: 0;
   }
 }
 @media (max-width: 667px) {

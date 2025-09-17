@@ -1,33 +1,51 @@
 // ErrorPage.tsx
 
-import { DigiMediaImage, DigiTypography } from "@digi/arbetsformedlingen-react";
-import { TypographyVariation } from "@digi/arbetsformedlingen";
-import { AppButton } from "../components/buttons/AppButton";
+import { DigiNotificationErrorPage, DigiLinkButton } from "@digi/arbetsformedlingen-react";
+import { ErrorPageStatusCodes, LinkButtonSize, LinkButtonVariation } from "@digi/arbetsformedlingen";
 import { useNavigate } from "react-router-dom";
 import "../styles/pages/ErrorPage.css"
 
 export const ErrorPage = () => {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
+    const handleGoBack = () => {
+        navigate(-1);
+    };
 
-    const handleClick = () => {
-        navigate("/")
-    }
     return (
-    <>
-     <DigiTypography afVariation={TypographyVariation.SMALL}>
-        <div className="error-wrapper">
-            <DigiMediaImage
-            afUnlazy
-            afSrc='/images/Error-image.png'
-            afAlt="Error image for Apploy"
+        <div className="error-page">
+            <DigiNotificationErrorPage 
+                afHttpStatusCode={ErrorPageStatusCodes.NOT_FOUND}
             >
-            </DigiMediaImage>
-            <h2>Tyvärr kunde inte denna sida hittas...</h2>
-            <p>Men låt inte det stoppa dig!</p>
-            <AppButton onClick={handleClick} children="Hitta tillbaka"></AppButton>
+<p slot="bodytext">
+Det kan bero på att länken är felaktig eller att sidan inte finns kvar. Du kan prova att ladda om sidan eller använda länkarna för att komma vidare.        
+        	</p>
+
+                <ul slot="links">
+                    <li>
+                        <DigiLinkButton
+                            afHref="#"
+                            afSize={LinkButtonSize.MEDIUM}
+                            afVariation={LinkButtonVariation.PRIMARY}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleGoBack();
+                            }}
+                        >
+                            Till föregående sida
+                        </DigiLinkButton>
+                    </li>
+                    <li>
+                        <DigiLinkButton
+                            afHref="/"
+                            afSize={LinkButtonSize.MEDIUM}
+                            afVariation={LinkButtonVariation.PRIMARY}
+                        >
+                            Till startsidan
+                        </DigiLinkButton>
+                    </li>
+                </ul>
+            </DigiNotificationErrorPage>
         </div>
-     </DigiTypography>
-    </>
     )
 }

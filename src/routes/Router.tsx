@@ -28,6 +28,10 @@ export const router = createBrowserRouter([
         path: "/user",
         element: <UserPage />,
       },
+      {
+        path: "/404",
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);

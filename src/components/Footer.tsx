@@ -8,15 +8,13 @@ import {
   DigiIconSign,
   DigiIconGlobe,
   DigiIconEnvelope,
-  DigiIconArrowUp,
-  DigiIconArrowRight,
-  DigiButton,
 } from '@digi/arbetsformedlingen-react';
+import { CustomLinkButton } from './buttons/CustomLinkButton';
 import '../styles/components/Footer.css';
-import { useNavigate } from 'react-router-dom';
+
 
 export const Footer = () => {
-  const navigate = useNavigate();
+ 
 
 
  

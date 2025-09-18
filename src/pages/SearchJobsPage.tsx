@@ -60,6 +60,9 @@ export const SearchJobsPage = () => {
     const [selectedBranches, setSelectedBranches] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
     
+    // Key state for forcing component re-render when clearing filters
+    const [filterResetKey, setFilterResetKey] = useState<number>(0);
+    
     /**
      * Smooth scroll to top of page
      * Used when changing pages, filters, or clearing filters
@@ -119,6 +122,7 @@ export const SearchJobsPage = () => {
     /**
      * Clears all active filters and resets the job search
      * Resets search term, selected locations, selected branches, and fetches fresh jobs
+     * Also forces UI components to reset by changing their key
      */
     const handleClearFilters = async () => {
         setSearchTerm('');
@@ -126,6 +130,9 @@ export const SearchJobsPage = () => {
         setSelectedBranches([]);
         setCurrentPage(1);
         setJobs([]);
+        
+        // Force UI components to reset by changing their key
+        setFilterResetKey(prev => prev + 1);
         
         // Smooth scroll to top when clearing filters
         scrollToTop();
@@ -158,29 +165,32 @@ export const SearchJobsPage = () => {
             <div className="search-bar-wrapper">
                 <div className="search-bar-container">
   <DigiFormInputSearch
+    key={`search-${filterResetKey}`}
     afLabel="Sök jobb"
     afVariation={FormInputSearchVariation.MEDIUM}
     afType={FormInputType.SEARCH}
     afButtonText="Sök"
-     onAfOnChange={(e: any) => setSearchTerm(extractSearchValue(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
-     onAfOnSubmitSearch={(e: any) => setSearchTerm(extractSearchValue(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+     onAfOnChange={(e: CustomEvent) => setSearchTerm(extractSearchValue(e))}
+     onAfOnSubmitSearch={(e: CustomEvent) => setSearchTerm(extractSearchValue(e))} 
   />
 </div>
   <div className="filter-dropdowns">
     <DigiFormFilter
+      key={`location-${filterResetKey}`}
       afFilterButtonText="Ort"
       afSubmitButtonText="Filtrera"
       afName="Välj ort"
       afListItems={SWEDISH_COUNTIES.map(county => ({ id: county, label: county }))}
-       onAfSubmitFilter={(e: any) => setSelectedLocations(extractCheckedItems(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+       onAfSubmitFilter={(e: CustomEvent) => setSelectedLocations(extractCheckedItems(e))}
        onAfResetFilter={() => setSelectedLocations([])}
     />
     <DigiFormFilter
+      key={`branch-${filterResetKey}`}
       afFilterButtonText="Bransch"
       afSubmitButtonText="Filtrera"
       afName="Välj bransch"
       afListItems={JOB_BRANCHES.map(branch => ({ id: branch || '', label: branch || '' }))}
-       onAfSubmitFilter={(e: any) => setSelectedBranches(extractCheckedItems(e))} // eslint-disable-line @typescript-eslint/no-explicit-any
+       onAfSubmitFilter={(e: CustomEvent) => setSelectedBranches(extractCheckedItems(e))}
        onAfResetFilter={() => setSelectedBranches([])}
     />
   </div>

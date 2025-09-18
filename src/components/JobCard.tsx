@@ -66,6 +66,7 @@ export const JobCard = ({ job }: JobCardProps) => {
      */
     const handleClick = (jobId: string) => {
         navigate(`/jobs/${jobId}`);
+        window.scroll(0, 0) 
     };
 
     /**

@@ -8,7 +8,7 @@ import {
   DigiMediaImage,
 } from '@digi/arbetsformedlingen-react';
 import '../styles/components/Header.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 export const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // To tell navigation which page so the component can show clearly what page user are on
@@ -19,13 +19,6 @@ export const Header = () => {
 
   return (
     <>
-      {/* 
-            <DigiHeader
-                afSystemName="Apploy"
-                afHideSystemName={false}
-                afMenuButtonText="Meny"
-            >
-                <a aria-label="Designsystemets startsida" href="/"></a> */}
       <section className="header-wrapper">
         <div className="header-container" slot="header-content">
           <div onClick={handleClick}>
@@ -37,15 +30,12 @@ export const Header = () => {
           </div>
           <h1>Utforska aktuella jobbannonser från hela Sverige</h1>
           <div>
-            <DigiIconGlobe></DigiIconGlobe>
-            <DigiIconUserAlt>
-              {/*                          <DigiHeaderAvatar            
-                        afName="Linda Karlsson"
-                        afSignature="KALIA"
-                        afIsLoggedIn={true}
-                        afHideSignature={true}
-                        ></DigiHeaderAvatar> */}
-            </DigiIconUserAlt>
+            <NavLink to="/jobs">
+              <DigiIconGlobe></DigiIconGlobe>
+            </NavLink>
+            <NavLink to="/user">
+              <DigiIconUserAlt></DigiIconUserAlt>
+            </NavLink>
           </div>
         </div>
         <div slot="header-navigation">

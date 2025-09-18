@@ -15,7 +15,7 @@ import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandler
 /**
  * Generates a description of the current active filters
  * @param selectedLocations - Array of selected locations
- * @param selectedBranches - Array of selected branches  
+ * @param selectedBranches - Array of selected branches
  * @param searchTerm - Current search term
  * @returns Description string of active filters
  */

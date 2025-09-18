@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { BarChartVariation } from "@digi/arbetsformedlingen";
-import { DigiBarChart } from "@digi/arbetsformedlingen-react";
-import { fetchChartJobs } from "../services/chartService"; 
-import type { JobAd } from "../types/jobs";
+// Chart.tsx
+
+import { useEffect, useState } from 'react';
+import { BarChartVariation } from '@digi/arbetsformedlingen';
+import { DigiBarChart } from '@digi/arbetsformedlingen-react';
+import { fetchChartJobs } from '../services/chartService';
+import type { JobAd } from '../types/jobs';
 
 interface ChartSeries {
   yValues: number[];
@@ -21,10 +23,11 @@ interface ChartData {
 }
 
 export const Chart = () => {
+  // State to hold chart data
   const [chartData, setChartData] = useState<ChartData>({
     data: {
       xValues: [],
-      series: [{ yValues: [], title: "Jobb" }],
+      series: [{ yValues: [], title: 'Jobb' }],
       xValueNames: [],
     },
     x: "Antal jobb",
@@ -32,26 +35,32 @@ export const Chart = () => {
     title: "",
   });
 
-  const [loading, setLoading] = useState(true); 
+  // State to track loading status
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadJobs = async () => {
       setLoading(true);
+
+      // Fetch job ads (limit 100 in this case)
       const jobs: JobAd[] = await fetchChartJobs(100);
 
+      // Count how many jobs per region
       const regionCounts: Record<string, number> = {};
-      jobs.forEach(job => {
-        const region = job.workplace_address?.region || "Okänd region";
+      jobs.forEach((job) => {
+        const region = job.workplace_address?.region || 'Okänd region'; // fallback if region is missing
         regionCounts[region] = (regionCounts[region] || 0) + 1;
       });
 
-      const xValueNames = Object.keys(regionCounts);
-      const yValues = Object.values(regionCounts);
+      // Prepare data for the chart
+      const xValueNames = Object.keys(regionCounts); // Region names
+      const yValues = Object.values(regionCounts); // Number of jobs per region
 
+      // Update chart state with processed data
       setChartData({
         data: {
           xValues: yValues,
-          series: [{ yValues, title: "Jobb" }],
+          series: [{ yValues, title: 'Jobb' }],
           xValueNames,
         },
         x: "Antal jobb",
@@ -61,11 +70,13 @@ export const Chart = () => {
       setLoading(false);
     };
 
+    // Load jobs on component mount
     loadJobs();
   }, []);
 
+  // Show loading message while fetching data
   if (loading) {
-    return <div>Laddar diagram...</div>; 
+    return <div>Laddar diagram...</div>;
   }
 
   return (

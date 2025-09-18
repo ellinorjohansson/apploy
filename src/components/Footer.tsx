@@ -1,9 +1,22 @@
-import { FooterVariation, FooterCardVariation} from "@digi/arbetsformedlingen"
-import { DigiFooter, DigiFooterCard, DigiIconAccessibilityUniversal, DigiIconSign, DigiIconGlobe, DigiIconEnvelope } from "@digi/arbetsformedlingen-react"
-import "../styles/components/Footer.css"
-import { CustomLinkButton } from "./buttons/CustomLinkButton"
+// Footer.tsx
+
+import { FooterVariation, FooterCardVariation } from '@digi/arbetsformedlingen';
+import {
+  DigiFooter,
+  DigiFooterCard,
+  DigiIconAccessibilityUniversal,
+  DigiIconSign,
+  DigiIconGlobe,
+  DigiIconEnvelope,
+  DigiIconArrowUp,
+  DigiIconArrowRight,
+  DigiButton,
+} from '@digi/arbetsformedlingen-react';
+import '../styles/components/Footer.css';
+import { useNavigate } from 'react-router-dom';
 
 export const Footer = () => {
+  const navigate = useNavigate();
 
 
  

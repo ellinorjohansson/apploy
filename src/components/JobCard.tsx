@@ -3,9 +3,12 @@
 // Shows job headline, location, employer, work mode, and provides navigation to job details
 
 import type { JobAd } from "../types/jobs";
-import { DigiLayoutBlock, DigiTypography, DigiIconBuildingOutline } from "@digi/arbetsformedlingen-react";
+import { DigiLayoutBlock, DigiTypography, DigiIconBuildingOutline, DigiIconBookmarkOutline, DigiIconBookmarkSolid } from "@digi/arbetsformedlingen-react";
 import { LayoutBlockVariation } from "@digi/arbetsformedlingen";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useJobs } from "../hooks/useJobs";
+import { JobActionTypes } from "../reducers/SaveJobReducer";
 
 interface JobCardProps {
     job: JobAd;
@@ -19,6 +22,12 @@ export const JobCard = ({ job }: JobCardProps) => {
 
     // Navigation hook for routing to job details
     const navigate = useNavigate();
+    
+    // Get jobs and dispatch from SaveJob context
+    const { jobs, dispatch } = useJobs();
+    
+    // Check if current job is saved (bookmarked)
+    const isBookmarked = jobs.some(savedJob => savedJob.id === job.id);
 
     /**
      * Determines work mode (remote/hybrid/on-site) based on job description
@@ -58,6 +67,24 @@ export const JobCard = ({ job }: JobCardProps) => {
     const handleClick = (jobId: string) => {
         navigate(`/jobs/${jobId}`);
     };
+
+    /**
+     * Handles bookmark toggle click
+     * Prevents event propagation to avoid triggering job card navigation
+     * Adds or removes job from saved jobs using SaveJob context
+     * @param event - Click event
+     */
+    const handleBookmarkClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        
+        if (isBookmarked) {
+            // Remove job from saved jobs
+            dispatch({ type: JobActionTypes.REMOVED, payload: job.id });
+        } else {
+            // Add job to saved jobs
+            dispatch({ type: JobActionTypes.ADDED, payload: job });
+        }
+    };
     return (
         <div
             className="job-card-wrapper"
@@ -67,6 +94,18 @@ export const JobCard = ({ job }: JobCardProps) => {
                 className="job-card"
                 afVariation={LayoutBlockVariation.TRANSPARENT}
             >
+                {/* Bookmark icon - positioned absolutely in top right corner */}
+                <div 
+                    className="bookmark-icon"
+                    onClick={handleBookmarkClick}
+                >
+                    {isBookmarked ? (
+                        <DigiIconBookmarkSolid className="bookmark-icon-svg" />
+                    ) : (
+                        <DigiIconBookmarkOutline className="bookmark-icon-svg" />
+                    )}
+                </div>
+
                 <DigiTypography>
                     <div className="job-card-header">
                         <div className="job-location">{region}</div>

@@ -1,0 +1,44 @@
+.error-page {
+  padding: 0 7rem;
+  background-color: var(--color-background);
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-page .sc-digi-notification-error-page-h {
+  --digi--notification-error-page--padding-top--desktop: 0;
+  --digi--notification-error-page--padding-top--mobile: 0;
+}
+
+.error-page .sc-digi-notification-error-page-h h1,
+.error-page .sc-digi-notification-error-page-h .digi-notification-error-page__headline {
+  color: var(--color-header-footer-bg) !important;
+}
+
+/* Style the list items to add spacing between buttons */
+.error-page .sc-digi-notification-error-page-h ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.error-page .sc-digi-notification-error-page-h li {
+  margin: 0;
+  padding: 0;
+}
+
+.error-page .sc-digi-link-button-h .digi-link-button--variation-primary.sc-digi-link-button {
+  background-color: var(--color-primary) !important;
+  color: var(--color-header-footer-bg) !important;
+}
+
+.error-page .sc-digi-link-button-h .digi-link-button--variation-primary.sc-digi-link-button:hover {
+  background-color: var(--color-header-footer-bg) !important;
+  color: var(--color-primary) !important;
+}
+

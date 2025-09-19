@@ -1,0 +1,34 @@
+/* Global styles */
+#root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--digi--global--typography--font-family--default);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+
+}
+
+html {
+  scroll-behavior: smooth; /* Mjuk scrollning på hela sidan */
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Secondary button styles - following the same pattern as primary button */
+.sc-digi-button-h .digi-button--variation-secondary.sc-digi-button {
+    color: var(--color-header-footer-bg) !important;
+}
+
+.sc-digi-button-h .digi-button--variation-secondary.sc-digi-button:hover {
+    color: var(--color-header-footer-bg) !important;
+}

@@ -28,7 +28,10 @@
 .headline-logo {
     height: 50px; 
     margin-right: 20px;
-    flex-shrink: 0; 
+    flex-shrink: 0;
+    /* Add color filter to change logo color */
+    /* Example: filter: hue-rotate(180deg); for color change */
+    /* Example: filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%); for specific color */
 }
 
 .headline-wrapper h2 {

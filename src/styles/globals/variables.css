@@ -27,6 +27,4 @@
   --digi--color--text--primary: var(--color-header-footer-bg);
   --digi--color--text--primary--hover: var(--color-background);
 
-  /* Overriding of AF fonts */
-  --digi--global--typography--font-family--default: "Poppins", sans-serif;
 }

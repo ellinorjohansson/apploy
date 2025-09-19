@@ -16,25 +16,30 @@ import {
 } from '@digi/arbetsformedlingen';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/pages/JobsDetailPage.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { JobAd } from '../types/jobs';
 import { AppButton } from '../components/buttons/AppButton';
 import { useJobs } from '../hooks/useJobs';
 import { JobActionTypes } from '../reducers/SaveJobReducer';
+import { useJobById } from '../hooks/useJobById';
 
 export const JobsDetailPage = () => {
   const { jobId } = useParams(); // Hämtar jobId från URL
   const navigate = useNavigate(); // For navigation
 
-  const [job, setJob] = useState<JobAd | null>(null); // State för enskilt jobb
-
-  const [loading, setLoading] = useState(false); // Loading state
 
   const [expanded, setExpanded] = useState(false); // Expander boolean för text
 
   const { dispatch } = useJobs();
 
   const [saved, setSaved] = useState(false);
+  
+  const { job, loading, error} = useJobById(`${jobId}`)
+
+  if (error) {
+    navigate("/404");
+    return null;
+  }
 
   const handleSaveJob = (job: JobAd) => {
     console.log('Saving job:', job);
@@ -101,46 +106,9 @@ export const JobsDetailPage = () => {
     }
   };
 
-  useEffect(() => {
-    // Refaktorera till en custom hook eller till en service till en context?
-    const getJob = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `https://jobsearch.api.jobtechdev.se/ad/${jobId}`
-        );
-        if (!response.ok) {
-          if (response.status === 404) {
-            // Job not found, redirect to 404 page
-            navigate('/404');
-            return;
-          }
-          throw new Error('Something failed in the fetch');
-        }
-        const data: JobAd = await response.json();
-        console.log('API Response:', data);
-        setJob(data);
-      } catch (error) {
-        console.error(error);
-        // If there's any other error, also redirect to 404
-        navigate('/404');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (jobId) {
-      getJob();
-    } else {
-      // No jobId provided, redirect to 404
-      navigate('/404');
-    }
-  }, [jobId, navigate]);
-
   return (
     <section className="body-wrapper">
       {loading && <div> Hämtar annonsen... </div>}
-
       {!loading && job && (
         <section className="main-wrapper">
           <div className="headline-wrapper">

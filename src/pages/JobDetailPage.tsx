@@ -24,11 +24,11 @@ import { JobActionTypes } from '../reducers/SaveJobReducer';
 import { useJobById } from '../hooks/useJobById';
 
 export const JobsDetailPage = () => {
-  const { jobId } = useParams(); // Hämtar jobId från URL
-  const navigate = useNavigate(); // For navigation
+  const { jobId } = useParams();
+  const navigate = useNavigate(); 
 
 
-  const [expanded, setExpanded] = useState(false); // Expander boolean för text
+  const [expanded, setExpanded] = useState(false); // State with boolean value for expander for text
 
   const { dispatch } = useJobs();
 
@@ -52,7 +52,7 @@ export const JobsDetailPage = () => {
     return !!value && value.toString().trim() !== '';
   };
 
-  // Hjälpfunktion för att kontrollera om adress är komplett
+  // Help function to check if the address is complete
   const hasCompleteAddress = (address: JobAd['workplace_address']): boolean => {
     return (
       !!address &&
@@ -61,7 +61,7 @@ export const JobsDetailPage = () => {
       shouldShow(address.municipality)
     );
   };
-  // Hjälpfunktion för att kontrollera om region är komplett
+  // Help function to check if region is complete
   const hasCompleteRegionInfo = (
     address: JobAd['workplace_address']
   ): boolean => {
@@ -78,7 +78,7 @@ export const JobsDetailPage = () => {
     const today = new Date();
     const deadlineDate = new Date(deadline);
 
-    // Sätt tid till midnatt för båda datumen för korrekt jämförelse
+    // Set time to midnight for both dates for correct comparison
     today.setHours(0, 0, 0, 0);
     deadlineDate.setHours(0, 0, 0, 0);
 
@@ -128,15 +128,15 @@ export const JobsDetailPage = () => {
 
                 <section className="description">
                   <h3>Företag</h3>
-                  <img src={job.logo_url} /> {/* Logotyp */}
+                  <img src={job.logo_url} />
                   <p>{job.employer?.name || 'Ej angivet.'}</p>
                   <h3>Om jobbet</h3>
                   {job.description?.text ? (
                     <div>
                       {(expanded
-                        ? job.description.text.split('\n') // alla stycken
+                        ? job.description.text.split('\n')
                         : job.description.text.split('\n').slice(0, 4)
-                      ) // första 2 stycken
+                      ) 
                         .map(
                           (paragraph, index) =>
                             paragraph.trim() && <p key={index}>{paragraph}</p>

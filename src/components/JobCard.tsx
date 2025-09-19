@@ -4,7 +4,7 @@
 
 import type { JobAd } from "../types/jobs";
 import { DigiLayoutBlock, DigiTypography, DigiIconBuildingOutline, DigiIconBookmarkOutline, DigiIconBookmarkSolid } from "@digi/arbetsformedlingen-react";
-import { LayoutBlockVariation } from "@digi/arbetsformedlingen";
+import { LayoutBlockVariation, TypographyVariation } from "@digi/arbetsformedlingen";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useJobs } from "../hooks/useJobs";
@@ -107,7 +107,7 @@ export const JobCard = ({ job }: JobCardProps) => {
                     )}
                 </div>
 
-                <DigiTypography>
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
                     <div className="job-card-header">
                         <div className="job-location">{region}</div>
                         <div className="job-employer">{employer}</div>

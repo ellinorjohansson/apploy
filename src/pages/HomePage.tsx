@@ -34,15 +34,17 @@ export const HomePage = () => {
           <DigiLayoutBlock afVariation={LayoutBlockVariation.SECONDARY}>
             <div className="intro-wrapper">
               <DigiLayoutContainer afVerticalPadding afNoGutter>
-                <h2>Hitta ditt drömjobb</h2>
-                <p>
-                  Upptäck tusentals aktuella jobbannonser från hela landet –
-                  anpassade efter dina intressen och mål.
-                </p>
-                <p>
-                  Oavsett om du är ny i arbetslivet eller vill ta nästa steg i
-                  karriären finns möjligheten här. Din framtid börjar idag!
-                </p>
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                  <h2>Hitta ditt drömjobb</h2>
+                  <p>
+                    Upptäck tusentals aktuella jobbannonser från hela landet –
+                    anpassade efter dina intressen och mål.
+                  </p>
+                  <p>
+                    Oavsett om du är ny i arbetslivet eller vill ta nästa steg i
+                    karriären finns möjligheten här. Din framtid börjar idag!
+                  </p>
+                </DigiTypography>
               </DigiLayoutContainer>
               <CustomLinkButton
                 afHref="#"

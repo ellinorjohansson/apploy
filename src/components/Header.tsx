@@ -1,7 +1,7 @@
 // Header.tsx
 
 import {
-  /*DigiHeader, DigiHeaderAvatar, */ DigiHeaderNavigation,
+  DigiHeaderNavigation,
   DigiHeaderNavigationItem,
   DigiIconGlobe,
   DigiIconUserAlt,
@@ -71,7 +71,6 @@ export const Header = () => {
           </DigiHeaderNavigation>
         </div>
       </section>
-      {/*  </DigiHeader> */}
     </>
   );
 };

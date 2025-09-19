@@ -77,7 +77,6 @@ figure {
         margin: 0;
         padding: 0;
         line-height: 0;
-        vertical-align: top;
     }
 }
 
@@ -126,8 +125,6 @@ figure {
 
 
 .chart-wrapper {
-    background-color: transparent;
-    /* fixa sedan, hårdkoda inte detta*/
     padding-left: 3rem;
     padding-right: 3rem;
     height: auto;

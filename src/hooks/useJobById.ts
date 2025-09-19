@@ -5,11 +5,11 @@ import type { JobAd } from "../types/jobs";
   
   export const useJobById = (jobId: string) => {
   
-    const [job, setJob] = useState<JobAd | null>(null); // State för enskilt jobb
+    const [job, setJob] = useState<JobAd | null>(null); // State for each job
 
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false); 
 
-    const [error, setError] = useState<string | null>(null) // State för Error
+    const [error, setError] = useState<string | null>(null)
   
   useEffect(() => {
     if(!jobId) {

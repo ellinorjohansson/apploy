@@ -10,6 +10,7 @@
     column-gap: 40px;
     margin-bottom: 50px;
 }
+
 .headline-wrapper {
     background-color: var(--color-text);
     grid-column: 2 / 12;
@@ -23,10 +24,14 @@
     padding: 0 20px; 
 }
 
+
 .headline-logo {
     height: 50px; 
     margin-right: 20px;
-    flex-shrink: 0; 
+    flex-shrink: 0;
+    /* Add color filter to change logo color */
+    /* Example: filter: hue-rotate(180deg); for color change */
+    /* Example: filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%); for specific color */
 }
 
 .headline-wrapper h2 {
@@ -43,6 +48,7 @@
     flex-direction: column;
     gap: 50px;
 }
+
 .sc-digi-layout-block-h {
     text-align: center;
     border-radius: 15px;
@@ -58,6 +64,10 @@
     background-color: var( --color-text);
     border-radius: 15px;
 }
+
+
+
+
 .section-wrapper {
     display: flex;
     flex-direction: column;
@@ -161,4 +171,346 @@ ul.digi-list__list.sc-digi-list :nth-child(5){
 
 .add-text {
     margin-top: 10px;
+}
+
+/* ===== MEDIA QUERIES ===== */
+
+/* Responsive layout for screens smaller than 870px */
+@media (max-width: 870px) {
+    .main-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    .headline-wrapper {
+        grid-column: unset;
+        margin-top: 20px;
+        margin-bottom: 0;
+        min-height: 60px;
+        padding: 10px 15px;
+    }
+    
+    .digiblock-wrapper {
+        grid-column: unset;
+        grid-row: unset;
+        gap: 20px;
+    }
+    
+    .sc-digi-list-h {
+        grid-column: unset;
+        grid-row: unset;
+        margin-top: 0;
+        width: 100%;
+    }
+    
+    /* Center the list */
+    ul.digi-list__list.sc-digi-list {
+        margin: 0 auto;
+    }
+    
+    ul.digi-list__list.sc-digi-list li {
+        width: 100%;
+        display: block;
+    }
+    
+    /* Adjust padding for smaller screens */
+    .description {
+        padding: 20px;
+        padding-top: 15px;
+    }
+    
+    .application-info {
+        padding: 20px;
+    }
+    
+    .details-wrapper {
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    /* Make headline more responsive */
+    .headline-wrapper h2 {
+        font-size: 1.2rem;
+    }
+    
+    .headline-logo {
+        height: 40px;
+        margin-right: 15px;
+    }
+}
+
+/* Extra responsive styles for very small screens (300px-500px) */
+@media (max-width: 500px) {
+    .headline-wrapper {
+        padding: 8px 12px;
+        min-height: 50px;
+    }
+    
+    .headline-wrapper h2 {
+        font-size: 1rem;
+    }
+    
+    .headline-logo {
+        height: 30px;
+        margin-right: 10px;
+    }
+    
+    .description {
+        padding: 15px;
+        padding-top: 10px;
+    }
+    
+    .application-info {
+        padding: 15px;
+    }
+    
+    .details-wrapper {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .profession {
+        height: 80px;
+    }
+    
+    .profession h3 {
+        font-size: 1.1rem;
+    }
+    
+    .section-wrapper h3 {
+        font-size: 1.1rem;
+    }
+    
+    .section-wrapper h4 {
+        font-size: 1rem;
+    }
+    
+    .section-wrapper h5 {
+        font-size: 0.9rem;
+    }
+    
+    .section-wrapper p {
+        font-size: 0.9rem;
+    }
+    
+    .expand-read {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .button-wrapper {
+        gap: 15px;
+    }
+    
+    .save-button {
+        margin-bottom: 50px;
+    }
+    
+    /* Center the list on smaller screens */
+    ul.digi-list__list.sc-digi-list {
+        margin: 0 auto;
+    }
+    
+    ul.digi-list__list.sc-digi-list li {
+        width: 100%;
+        display: block;
+    }
+}
+
+/* Extra responsive styles for very small screens (300px-400px) */
+@media (max-width: 400px) {
+    .headline-wrapper {
+        padding: 6px 10px;
+        min-height: 45px;
+    }
+    
+    .headline-wrapper h2 {
+        font-size: 0.9rem;
+    }
+    
+    .headline-logo {
+        height: 25px;
+        margin-right: 8px;
+    }
+    
+    .description {
+        padding: 12px;
+        padding-top: 8px;
+    }
+    
+    .application-info {
+        padding: 12px;
+    }
+
+    .application-info a {
+        font-size: 0.8rem;
+    }
+
+    
+    .details-wrapper {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .profession {
+        height: 70px;
+    }
+    
+    .profession h3 {
+        font-size: 1rem;
+    }
+    
+    .section-wrapper h3 {
+        font-size: 1rem;
+    }
+    
+    .section-wrapper h4 {
+        font-size: 0.9rem;
+    }
+    
+    .section-wrapper h5 {
+        font-size: 0.8rem;
+    }
+    
+    .section-wrapper p {
+        font-size: 0.8rem;
+    }
+    
+    .expand-read {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .button-wrapper {
+        gap: 12px;
+        scale: 0.8;
+    }
+    
+    .save-button {
+        margin-bottom: 40px;
+        scale: 0.8;
+    }
+    
+    .add-text {
+        font-size: 0.8rem;
+    }
+    
+    /* Center the list on smaller screens */
+    ul.digi-list__list.sc-digi-list {
+        margin: 0 auto;
+    }
+    
+    ul.digi-list__list.sc-digi-list li {
+        width: 100%;
+        display: block;
+    }
+    
+    /* Make list text smaller on small screens */
+    ul.digi-list__list.sc-digi-list h4,
+    ul.digi-list__list.sc-digi-list h5,
+    ul.digi-list__list.sc-digi-list p {
+        font-size: 0.8rem;
+    }
+    
+    /* Make email links smaller */
+    .email-wrapper a {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra responsive styles for extremely small screens (300px-350px) */
+@media (max-width: 350px) {
+    .headline-wrapper {
+        padding: 5px 8px;
+        min-height: 40px;
+    }
+    
+    .headline-wrapper h2 {
+        font-size: 0.8rem;
+    }
+    
+    .headline-logo {
+        height: 20px;
+        margin-right: 6px;
+    }
+    
+    .description {
+        padding: 10px;
+        padding-top: 6px;
+    }
+    
+    .application-info {
+        padding: 10px;
+    }
+    
+    .details-wrapper {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .profession {
+        height: 60px;
+    }
+    
+    .profession h3 {
+        font-size: 0.9rem;
+    }
+    
+    .section-wrapper h3 {
+        font-size: 0.9rem;
+    }
+    
+    .section-wrapper h4 {
+        font-size: 0.8rem;
+    }
+    
+    .section-wrapper h5 {
+        font-size: 0.7rem;
+    }
+    
+    .section-wrapper p {
+        font-size: 0.7rem;
+    }
+    
+    .expand-read {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .button-wrapper {
+        gap: 10px;
+    }
+    
+    .save-button {
+        margin-bottom: 30px;
+    }
+    
+    .add-text {
+        font-size: 0.7rem;
+    }
+    
+    /* Center the list on smaller screens */
+    ul.digi-list__list.sc-digi-list {
+        margin: 0 auto;
+    }
+    
+    ul.digi-list__list.sc-digi-list li {
+        width: 100%;
+        display: block;
+    }
+    
+    /* Make list text smaller on very small screens */
+    ul.digi-list__list.sc-digi-list h4,
+    ul.digi-list__list.sc-digi-list h5,
+    ul.digi-list__list.sc-digi-list p {
+        font-size: 0.7rem;
+    }
+    
+    /* Make email links smaller */
+    .email-wrapper a {
+        font-size: 0.7rem;
+    }
 }

@@ -55,6 +55,18 @@ $ npm install
 $ npm run dev
 ```
 
+## Environment Variables
+
+This application uses environment variables for API configuration. Create a `.env` file in the project root with the following variables:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=https://jobsearch.api.jobtechdev.se
+VITE_TAXONOMY_API_BASE_URL=https://taxonomy.api.jobtechdev.se/v1/taxonomy
+```
+
+**Note for reviewers:** The application will work without the `.env` file as it uses fallback values, but for optimal configuration, create the `.env` file as shown above.
+
 ## Acknowledgements
 
 - Arbetsförmedlingen and [JobTech Development](https://jobtechdev.se) for providing open data.  

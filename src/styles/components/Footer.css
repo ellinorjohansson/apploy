@@ -104,6 +104,19 @@ address ul li div {
     color: var(--color-primary);
 }
 
+
+.digi-footer___content-bottom {
+    margin: 0;
+    text-align: center;
+}
+
+.digi-footer__content-bottom.sc-digi-footer.sc-digi-footer-s.sc-digi-layout-block.sc-digi-layout-container {
+    margin-top: 0;
+    padding-top: 0;
+    display: block;
+}
+
+
 @media (max-width: 768px) {
     .foot-container {
         flex-direction: column;
@@ -117,5 +130,26 @@ address ul li div {
 
     address ul li {
         margin-bottom: 10px;
+    }
+
+    .sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s {
+        text-align: center;
+    }
+    
+    .sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s ul {
+        text-align: center;
+    }
+    
+    .sc-digi-footer-card-h .digi-footer-card .sc-digi-footer-card-s li {
+        text-align: center;
+    }
+    
+
+    .foot-container .sc-digi-footer-card-h {
+        text-align: center;
+    }
+    
+    .foot-container .sc-digi-footer-card-h * {
+        text-align: center;
     }
 }

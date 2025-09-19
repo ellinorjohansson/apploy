@@ -100,27 +100,7 @@ export const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div slot="content-bottom-left">
-                    <address>
-                        <ul>                        
-                            <li>
-                                <span>Storgatan 12, 123 45</span>
-                                <p>Fantasistad</p>
-                            </li>
-                            <li>
-                                <span>Telefon:</span>
-                                <a href="+46123456789">012-345 67 89</a>
-                            </li>
-                            <li>
-                                <div>
-                                    <DigiIconEnvelope></DigiIconEnvelope>
-                                    <span>E-post:</span>
-                                </div>
-                                <a href="mailto:kontakt@foretagsnamn.se">kontakt@foretagsnamn.se</a>
-                            </li>
-                        </ul>
-                    </address>
-                </div>
+             
                 <div slot="content-bottom-right">
                     <p>Följ oss på</p>
                     <a href="#">Facebook</a>

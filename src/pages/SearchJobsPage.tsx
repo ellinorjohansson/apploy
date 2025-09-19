@@ -7,8 +7,8 @@ import { fetchJobs, type FetchJobsResult } from "../services/fetchJobServices";
 import type { JobAd } from "../types/jobs";
 import { AppButton } from "../components/buttons/AppButton";
 import { JobCard } from "../components/JobCard";
-import { DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination } from "@digi/arbetsformedlingen-react";
-import { FormInputSearchVariation, FormInputType } from "@digi/arbetsformedlingen";
+import { DigiFormInputSearch, DigiFormFilter, DigiNavigationPagination, DigiTypography } from "@digi/arbetsformedlingen-react";
+import { FormInputSearchVariation, FormInputType, TypographyVariation } from "@digi/arbetsformedlingen";
 import { SWEDISH_COUNTIES, JOB_BRANCHES, JOBS_PER_PAGE } from "../constants/filterConstants";
 import { extractSearchValue, extractCheckedItems } from "../helpers/eventHandlers";
 
@@ -159,7 +159,9 @@ export const SearchJobsPage = () => {
     
     return (
         <div className="search-page">
-            <h3 className="search-subtitle">Hitta ditt nästa jobb bland tusentals möjligheter</h3>
+            <DigiTypography afVariation={TypographyVariation.SMALL}>
+                <h3 className="search-subtitle">Hitta ditt nästa jobb bland tusentals möjligheter</h3>
+            </DigiTypography>
            
             <div className="search-section">
             <div className="search-bar-wrapper">
@@ -198,28 +200,38 @@ export const SearchJobsPage = () => {
 
                 
                 {/* Display number of search results */}
-                <div className="search-results-info">
-                    Din sökning gav {totalJobs} träffar/möjligheter
-                </div>
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                    <div className="search-results-info">
+                        Din sökning gav {totalJobs} träffar/möjligheter
+                    </div>
+                </DigiTypography>
                 
                 {/* Display current filter state */}
                 <div className="filter-section">
                     <div className="filter-header">
-                        <p className="filter-description">{getFilterDescription(selectedLocations, selectedBranches, searchTerm)}</p>
+                        <DigiTypography afVariation={TypographyVariation.SMALL}>
+                            <p className="filter-description">{getFilterDescription(selectedLocations, selectedBranches, searchTerm)}</p>
+                        </DigiTypography>
                         {(selectedBranches.length > 0 || selectedLocations.length > 0 || searchTerm.trim()) && (
                             <AppButton onClick={handleClearFilters} variant="secondary">Rensa filter</AppButton>
                         )}
                     </div>
                     {hasConflictingFilters && (
-                        <div className="filter-warning">
-                            <p>Sökterm har prioritet - bransch- och ort-filter ignoreras</p>
-                        </div>
+                        <DigiTypography afVariation={TypographyVariation.SMALL}>
+                            <div className="filter-warning">
+                                <p>Sökterm har prioritet - bransch- och ort-filter ignoreras</p>
+                            </div>
+                        </DigiTypography>
                     )}
                 </div>
             </div>
             
             {/* Loading indicator */}
-            {loading && <div className="loading-indicator">Laddar fler jobb...</div>}
+            {loading && (
+                <DigiTypography afVariation={TypographyVariation.SMALL}>
+                    <div className="loading-indicator">Laddar fler jobb...</div>
+                </DigiTypography>
+            )}
             
             {/* Job cards container - key prop forces re-render when page or results change */}
             <div 

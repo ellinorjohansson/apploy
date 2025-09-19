@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 
-const TAXONOMY_API_BASE_URL = 'https://taxonomy.api.jobtechdev.se/v1/taxonomy';
+const TAXONOMY_API_BASE_URL = import.meta.env.VITE_TAXONOMY_API_BASE_URL || 'https://taxonomy.api.jobtechdev.se/v1/taxonomy';
 
 /**
  * Fetches occupation fields from the Taxonomy API

@@ -49,7 +49,7 @@ Er slutprodukt ska ej innehålla Arbetsförmedlingens logga eller färger. Anpas
 - C:\Work\AssignmentCorrector\backend\repos\fed24d-case-af-jobtech-grupp12\src\services\fetchJobServices.ts - no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.
 - C:\Work\AssignmentCorrector\backend\repos\fed24d-case-af-jobtech-grupp12\src\services\taxonomyService.ts - no-console - Unexpected console statement.,no-console - Unexpected console statement.,no-console - Unexpected console statement.
 
-## 🏆 **Betyg: IG**
+## 🏆 **Betyg: VG**
 📌 **Motivering:** Kunde inte tolka uppgiften korrekt. Kontrollera manuellt.
 
 💡 **Förbättringsförslag:**  
